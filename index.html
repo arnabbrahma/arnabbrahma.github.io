@@ -2,175 +2,398 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="apple-mobile-web-app-title" content="Arnab Brahma Portfolio">
-  <meta name="description" content="Arnab Brahma is a Mechanical Engineer specializing in estimating, project coordination, and change management.">
-  <meta name="keywords" content="Arnab, Brahma, Arnab Brahma, Mechanical Engineer Canada, Arnab Brahma Engineer, Arnab Brahma Canada, Pennecon Arnab, RothLochston Arnab, Cahill Arnab">
-  <meta name="author" content="Arnab Brahma">
-  <title>Arnab Brahma - Portfolio</title>
 
-  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-  <link rel="manifest" href="/site.webmanifest">
+    <meta charset="UTF-8">
 
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-  <link rel="stylesheet" href="https://use.typekit.net/skn8ash.css">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/locomotive-scroll@4.1.4/dist/locomotive-scroll.min.css">
+    <link rel="apple-touch-icon" type="logo.png" />
 
-  <style>
-    :root {
-      --text-color: #111;
-      --bg-color: #b9b3a9;
-    }
+    <meta name="apple-mobile-web-app-title" content="Arnab Brahma Portfolio">
+    <meta name="description"
+        content="Arnab Brahma is a Mechanical Engineer based in Canada. Works for the Voisey's Bay Mine Expansion Project with Pennecon.">
+    <meta name="keywords"
+        content="Arnab, Brahma, Arnab Brahma, Mechanical Engineer Canada, Arnab Brahma Engineer, Arnab Brahma Canada, Pennecon Arnab, RothLochston Arnab, Cahill Arnab">
+    <meta name="author" content="Arnab Brahma">
 
-    html, body {
-      margin: 0;
-      padding: 0;
-      font-family: termina, sans-serif;
-      color: var(--text-color);
-      background: var(--bg-color);
-      transition: 0.3s ease-out;
-      overflow-x: hidden;
-    }
+    <link rel="apple-touch-icon" sizes="180x180" href="logo.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
 
-    .typewriter h1 {
-      overflow: hidden;
-      border-right: .15em solid orange;
-      white-space: nowrap;
-      letter-spacing: .15em;
-      animation:
-        typing 3.5s steps(40, end),
-        blink-caret .75s step-end infinite;
-      font-size: 2rem;
-    }
+    <meta property="og:title" content="Arnab Brahma Portfolio" />
+    <meta property="og:type" content="Portfolio" />
+    <meta property="og:url" content="https://www.arnabbrahma.com" />
+    <meta property="og:image" content="logo.png" />
 
-    @keyframes typing {
-      from { width: 0 }
-      to { width: 100% }
-    }
+    <title>Arnab Brahma- Portfolio</title>
 
-    @keyframes blink-caret {
-      from, to { border-color: transparent }
-      50% { border-color: orange; }
-    }
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-    img {
-      width: 100%;
-      max-width: 600px;
-      height: auto;
-      object-fit: cover;
-      opacity: 0.85;
-      margin: 1rem 0;
-    }
+    <link rel='stylesheet' href='https://use.typekit.net/skn8ash.css'>
 
-    h1, h2, h3, h4 {
-      margin-bottom: 1rem;
-    }
+    <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/locomotive-scroll@3.5.4/dist/locomotive-scroll.css'>
 
-    section {
-      width: 100vw;
-      height: 100vh;
-      flex-shrink: 0;
-      scroll-snap-align: start;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      padding: 2rem;
-      box-sizing: border-box;
-    }
 
-    .scroll-container {
-      display: flex;
-      flex-direction: row;
-      overflow-x: scroll;
-      scroll-snap-type: x mandatory;
-      width: 100vw;
-      height: 100vh;
-    }
+    <style>
+        :root {
+            --text-color: #111;
+            --bg-color: #b9b3a9;
+        }
 
-    .scroll-container::-webkit-scrollbar {
-      display: none;
-    }
+        body {
+            font-family: termina, sans-serif;
+            color: var(--text-color);
+            background: var(--bg-color);
+            transition: 0.3s ease-out;
+            overflow-x: hidden;
+            max-width: 100%;
+            width: 100%;
+            overscroll-behavior: none;
+        }
 
-    footer {
-      text-align: center;
-      padding: 2rem;
-      background-color: #fff;
-      border-top: 1px solid #ddd;
-      color: #777;
-    }
+        section:not(#sectionPin) {
+            min-height: 100vh;
+            width: 100%;
+            position: relative;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-gap: 2rem;
+            padding: 50px 10vw;
+            margin: auto;
+            place-items: center;
+        }
 
-    a {
-      color: #007acc;
-      text-decoration: none;
-    }
+        .typewriter h1 {
+            overflow: hidden;
+            /* Ensures the content is not revealed until the animation */
+            border-right: .15em solid orange;
+            /* The typwriter cursor */
+            white-space: nowrap;
+            /* Keeps the content on a single line */
+            margin: 0 auto;
+            /* Gives that scrolling effect as the typing happens */
+            letter-spacing: .15em;
+            /* Adjust as needed */
+            animation:
+                typing 3.5s steps(40, end),
+                blink-caret .75s step-end infinite;
+        }
 
-    a:hover {
-      text-decoration: underline;
-    }
+        /* The typing effect */
+        @keyframes typing {
+            from {
+                width: 0
+            }
 
-    @media (max-width: 768px) {
-      .typewriter h1 {
-        font-size: 1.5rem;
-      }
-    }
-  </style>
+            to {
+                width: 80%
+            }
+        }
+
+        /* The typewriter cursor effect */
+        @keyframes blink-caret {
+
+            from,
+            to {
+                border-color: transparent
+            }
+
+            50% {
+                border-color: orange;
+            }
+        }
+
+        img {
+            height: 80vh;
+            width: auto;
+            object-fit: cover;
+            opacity: 0.4;
+        }
+
+        h1 {
+            font-size: 4.8rem;
+            line-height: 1;
+            font-weight: 800;
+            margin-bottom: 2rem;
+            margin-top: -4rem;
+            position: absolute;
+            top: 10vw;
+            left: 10vw;
+            z-index: 4;
+            overflow-wrap: break-word;
+            hyphens: auto;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 17vw;
+            }
+        }
+
+        h1 span {
+            display: block;
+        }
+
+        h2 {
+            font-size: 2.4rem;
+            max-width: 400px;
+        }
+
+        h3 {
+            font-size: 1.5rem;
+            max-width: 400px;
+        }
+
+        h4 {
+            font-size: 1.3rem;
+            max-width: 400px;
+        }
+
+        .credit {
+            font-family: Termina, sans-serif;
+        }
+
+        .credit a {
+            color: var(--text-color);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        #sectionPin {
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            left: 0;
+            padding-right: 500px;
+            background: var(--text-color);
+            color: var(--bg-color);
+        }
+
+        .pin-wrap {
+            height: 100vh;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            padding: 50px 10vw;
+        }
+
+        .pin-wrap>* {
+            min-width: 60vw;
+            padding: 0 5vw;
+        }
+
+        p {
+            position: absolute;
+            bottom: 10vw;
+            right: 10vw;
+            width: 200px;
+            line-height: 1.5;
+        }
+
+
+
+        .centered {
+            position: relative;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+    </style>
+
+    <script>
+        window.console = window.console || function (t) {};
+    </script>
+
+
+
+    <script>
+        if (document.location.search.match(/type=embed/gi)) {
+            window.parent.postMessage("resize", "*");
+        }
+    </script>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 
-<body>
-  <div class="typewriter">
-    <h1><span>Hi</span> <span>I’m</span> <span>Arnab</span></h1>
-    <p>Scroll ➡️</p>
-  </div>
+<body translate="no">
+    <div class="container">
+        <section data-bgcolor="#bcb8ad" data-textcolor="#032f35">
 
-  <div class="scroll-container">
-    <section>
-      <h2>Mechanical Engineer | Estimator</h2>
-      <h3>Pennecon Industrial Ltd</h3>
-      <img src="Voise.png" alt="Voisey's Bay Project">
-      <h4>Cost estimating, earned value, and productivity tracking.</h4>
-    </section>
+            <div class="typewriter">
+                <h1 data-scroll data-scroll-speed="1"><span>Hi</span> <span>I’m</span> <span>Arnab</span></h1>
+                <p data-scroll data-scroll-speed="2" data-scroll-delay="0.2"> Scroll Down, maybe? </p>
+            </div>
 
-    <section>
-      <img src="Roth.jpg" alt="RothLochston">
-      <h2>RothLochston VEL Ltd</h2>
-      <h3>Change orders, procurement, and vendor coordination.</h3>
-    </section>
+        </section>
 
-    <section>
-      <img src="Refine.jpg" alt="North Atlantic Refinery">
-      <h2>North Atlantic Refinery</h2>
-      <h3>Reliability Engineering | MAXIMO system optimization</h3>
-    </section>
+        <section id="sectionPin">
+            <div class="pin-wrap">
+                <h2>I did Mechanical Engineering from Memorial University (Class of 2021)</h2>
+                <h3>Now working full time <b>Mechanical Change Management Coordinator</b> <br> Pennecon <br> Voisey's
+                    Bay</h3>
+                <img src="Voise.png"
+                    alt=" Arnab Brahma Mechanical Engineer in Training Pennecon Liannu Voisey’s Bay Vale Mine Expansion ">
+                <h5>6,000 tonne/day Nickel Mine facillity, Pennecon got multiple projects here. I looked into the
+                    Change Orders, Cost tracking, and more.</h5>
+            </div>
+        </section>
 
-    <section>
-      <img src="Cahil.jpg" alt="Cahill Group">
-      <h2>The Cahill Group</h2>
-      <h3>Scheduled maintenance & material control</h3>
-    </section>
+        <section data-bgcolor="#e3857a" data-textcolor="#f1dba7" style="width: 80%;">
+            <img src="Roth.jpg"
+                alt=" Arnab Brahma Mechanical Engineer in Training RothLochston UNAAN Voisey’s Bay Vale Mine Expansion"
+                style="width: 80%;">
+                <div>	                
+                <h1 style="display:block;"> MINING </h1>
+            <h3 style="display:block;">Previously worked with RothLochston in Voisey's Bay as a Project Coordinator for
+                one year. <br> -Received approval for over $10M of Change Orders. <br> -Created task-lists for more
+                than 5,000 hours of scope.</h3>
+            <br>
+            <h5 style="display:block;">Additionally, As a Project Coordinator I was responsible for the management of
+                Company project activities for estimation and delivery of a project to initial point of execution. This
+                included the development of proposals/bids, plans budgets, and delivery of all equipment/tool/material
+                for initialization of a project. As a Project Coordinator, I had to have the ability to work
+                independently with minimal direction from the Project Manager. The role required a sound working
+                knowledge of the technical specifications and standards used throughout the construction industry. I
+                had to be resourceful and possessed demonstrated project management skills.</h5>
+        </div>
+        </section>
 
-    <section>
-      <img src="FP.jpg" alt="Other Roles">
-      <h2>Additional Experience</h2>
-      <h3>Town of Baie Verte | F&P Manufacturing</h3>
-      <p>GIS mapping and automation process engineering</p>
-    </section>
 
-    <section>
-      <h2>Download my <a href="https://acrobat.adobe.com/link/track?uri=urn:aaid:scds:US:d6c0acb2-19ea-4fec-9754-1db716928e49">resume</a>!<br>Thanks!</h2>
-      <a class="fa fa-linkedin" style="font-size:24px" href="https://www.linkedin.com/in/arnab-brahma/"></a><br><br>
-      <img src="https://i.imgur.com/ODT3YtK.png" alt="Arnab Brahma Logo" style="height:40px;">
-    </section>
-  </div>
+        <section data-bgcolor="#e3857a" data-textcolor="#f1dba7" style="padding-left: 50px;"><img src="Refine.jpg"
+                alt=" Arnab Brahma Mechanical Engineer in Training Come by Chance Refinery North Atlantic Refinery Braya Renewables"
+                style="width: 80%;">
+            <div>
+                <h1 style="display:block;"> OIL AND GAS </h1>
 
-  <footer>
-    &copy; 2025 Arnab Brahma. All rights reserved.
-  </footer>
+                <h3 style="display:block;">Work Term with North Atlantic Refining Ltd.<br> - 130,000 barrels of Oil
+                    refined every day.<br>- Reliability Engineering Coop. Fixed over 20,000 asset hierarchy issues.
+                    refined every day.<br>- Reliability Engineering Coop. Fixed over 20,000 asset hierarchy issues.
+                </h3>
+            </div>
+        </section>
+
+
+        <section data-bgcolor="#e3857a" data-textcolor="#f1dba7" style="padding-left: 50px;"><img src="Cahil.jpg"
+                alt=" Arnab Brahma Mechanical Engineer in Training The Cahill Group Memorial University Core Sciences Building "
+                style="width: 80%;">
+            <div>
+                <h1 style="display:block;"> CONSTRUCTION </h1>
+                <h3 style="display:block;">Coop Placement in The Cahill Group <br> - Go to person for any material/
+                    equipment issue. <br> - Looked into scheduled maintenance, and tool procurement.</h3>
+            </div>
+        </section>
+
+
+
+
+        <section data-bgcolor="#e3857a" data-textcolor="#f1dba7" style="padding-left: 50px; margin-bottom:-50px;"><img
+                src="FP.jpg"
+                alt=" Arnab Brahma Mechanical Engineer in Training Automotive Industry Town of Baie Verte F&amp;P Manufacturing"
+                style="width: 80%;">
+            <div>
+                <h1> AUTOMOTIVE </h1>
+                <h3>- Work Term with Town of Baie Verte as Project Engineering Coop<br>- Work Term with F&amp;P
+                    Manufacturing Inc. as Assembly/Quality Engineering Coop.</h3>
+            </div>
+        </section>
+
+
+        <section data-bgcolor="#e3857a" data-textcolor="#f1dba7">
+            <div>
+                <h2> Download my <a
+                        href="https://acrobat.adobe.com/link/track?uri=urn:aaid:scds:US:d6c0acb2-19ea-4fec-9754-1db716928e49">resume</a>!
+                    <br> Thanks! <br>
+                    <center><a class="fa fa-linkedin" style="font-size:24px"
+                            href="https://www.linkedin.com/in/arnab-brahma/"></a><br><br> <img
+                            src="https://i.imgur.com/ODT3YtK.png"
+                            alt="Arnab Brahma Mechanical Engineer in Training, Canada Logo" style="height:40px;">
+                    </center>
+                </h2>
+            </div>
+        </section>
+
+
+        <script
+            src="https://cpwebassets.codepen.io/assets/common/stopExecutionOnTimeout-2c7831bb44f98c1391d6a4ffda0e1fd302503391ca806e7fcc7b9b87197aec26.js">
+        </script>
+
+
+        <script src='https://unpkg.com/gsap@3/dist/ScrollTrigger.min.js'></script>
+
+        <script src='https://cdnjs.cloudflare.com/ajax/libs/gsap/3.5.1/gsap.min.js'></script>
+
+        <script src='https://cdn.jsdelivr.net/npm/locomotive-scroll@3.5.4/dist/locomotive-scroll.min.js'></script>
+
+        <script id="rendered-js">
+            gsap.registerPlugin(ScrollTrigger);
+
+            const pageContainer = document.querySelector(".container");
+
+            /* SMOOTH SCROLL */
+            const scroller = new LocomotiveScroll({
+                el: pageContainer,
+                smooth: true
+            });
+
+
+            scroller.on("scroll", ScrollTrigger.update);
+
+            ScrollTrigger.scrollerProxy(pageContainer, {
+                scrollTop(value) {
+                    return arguments.length ?
+                        scroller.scrollTo(value, 0, 0) :
+                        scroller.scroll.instance.scroll.y;
+                },
+                getBoundingClientRect() {
+                    return {
+                        left: 0,
+                        top: 0,
+                        width: window.innerWidth,
+                        height: window.innerHeight
+                    };
+
+                },
+                pinType: pageContainer.style.transform ? "transform" : "fixed"
+            });
+
+
+            ////////////////////////////////////
+            ////////////////////////////////////
+            window.addEventListener("load", function () {
+                let pinBoxes = document.querySelectorAll(".pin-wrap > *");
+                let pinWrap = document.querySelector(".pin-wrap");
+                let pinWrapWidth = pinWrap.offsetWidth;
+                let horizontalScrollLength = pinWrapWidth - window.innerWidth;
+
+                // Pinning and horizontal scrolling
+
+                gsap.to(".pin-wrap", {
+                    scrollTrigger: {
+                        scroller: pageContainer, //locomotive-scroll
+                        scrub: true,
+                        trigger: "#sectionPin",
+                        pin: true,
+                        // anticipatePin: 1,
+                        start: "top top",
+                        end: pinWrapWidth
+                    },
+
+                    x: -horizontalScrollLength,
+                    ease: "none"
+                });
+
+
+                ScrollTrigger.addEventListener("refresh", () => scroller.update()); //locomotive-scroll
+
+                ScrollTrigger.refresh();
+            });
+            //# sourceURL=pen.js
+        </script>
+
+    </div>
+
 </body>
 
 </html>
