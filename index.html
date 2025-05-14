@@ -31,144 +31,251 @@
 
 	
 	<style>
-	:root {
-	--text-color: #111;
-	--bg-color: #b9b3a9;
-	}
-	
-	body {
-	font-family: termina, sans-serif;
-	color: var(--text-color);
-	background: var(--bg-color);
-	transition: 0.3s ease-out;
-	overflow-x: hidden;
-	max-width: 100%;
-	width: 100%;
-	overscroll-behavior: none;
-	}
-	
-	section:not(#sectionPin) {
-	min-height: 100vh;
-	width: 100%;
-	position: relative;
-	display: grid;
-	grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-	grid-gap: 2rem;
-	padding: 50px 10vw;
-	margin: auto;
-	place-items: center;
-	}
-	.typewriter h1 {
-  overflow: hidden; /* Ensures the content is not revealed until the animation */
-  border-right: .15em solid orange; /* The typwriter cursor */
-  white-space: nowrap; /* Keeps the content on a single line */
-  margin: 0 auto; /* Gives that scrolling effect as the typing happens */
-  letter-spacing: .15em; /* Adjust as needed */
-  animation: 
-    typing 3.5s steps(40, end),
-    blink-caret .75s step-end infinite;
-}
+ .navbar {
+                        overflow: hidden;
+                        background-color: #333;
+                        position: fixed;
+                        z-index: 3000;
+                        top: 0;
+                        width: 100%;
+                }
 
-/* The typing effect */
-@keyframes typing {
-  from { width: 0 }
-  to { width: 100% }
-}
+                .navbar a {
+                        float: left;
+                        display: block;
+                        color: #f2f2f2;
+                        text-align: center;
+                        padding: 14px 16px;
+                        text-decoration: none;
+                        font-size: 6px;
+                }
 
-/* The typewriter cursor effect */
-@keyframes blink-caret {
-  from, to { border-color: transparent }
-  50% { border-color: orange; }
-}
-	img {
-	height: 80vh;
-	width: auto;
-	object-fit: cover;
-	opacity: 0.4;
-	}
-	
-	h1 {
-	font-size: 4.8rem;
-	line-height: 1;
-	font-weight: 800;
-	margin-bottom: 1rem;
-	position: absolute;
-	top: 10vw;
-	left: 10vw;
-	z-index: 4;
-	overflow-wrap: break-word;
-	hyphens: auto;
-	}
-	@media (max-width: 768px) {
-	h1 {
-	font-size: 17vw;
-	}
-	}
-	h1 span {
-	display: block;
-	}
-	
-	h2 {
-	font-size: 2.4rem;
-	max-width: 400px;
-	}
-		h3 {
-	font-size: 1.5rem;
-	max-width: 400px;
-	}
-			h4 {
-	font-size: 1.3rem;
-	max-width: 400px;
-	}
-	.credit {
-	font-family: Termina, sans-serif;
-	}
-	.credit a {
-	color: var(--text-color);
-	}
-	
-	* {
-	box-sizing: border-box;
-	}
-	
-	#sectionPin {
-	height: 100vh;
-	overflow: hidden;
-	display: flex;
-	left: 0;
-    padding-right: 500px;
-	background: var(--text-color);
-	color: var(--bg-color);
-	}
-	
-	.pin-wrap {
-	height: 100vh;
-	display: flex;
-	justify-content: flex-start;
-	align-items: center;
-	padding: 50px 10vw;
-	}
-	.pin-wrap > * {
-	min-width: 60vw;
-	padding: 0 5vw;
-	}
-	
-	p {
-	position: absolute;
-	bottom: 10vw;
-	right: 10vw;
-	width: 200px;
-	line-height: 1.5;
-	}
-    
-    
-    
-    
-    
-    
-    
-    
-    
+                .navbar a:hover {
+                        background: #ddd;
+                        color: black;
+                }
+
+                :root {
+                        --text-color: #111;
+                        --bg-color: #b9b3a9;
+                }
+
+                html {
+                        scroll-behavior: smooth;
+                }
+
+                body {
+                        font-family: termina, sans-serif;
+                        color: var(--text-color);
+                        background: var(--bg-color);
+                        transition: 0.3s ease-out;
+                        overflow-x: hidden;
+                        min-height: 100vh;
+                        overscroll-behavior: none;
+                }
+
+                section:not(#sectionPin) {
+                        min-height: 100vh;
+                        width: 100%;
+                        position: relative;
+                        display: grid;
+                        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+                        grid-gap: 7rem;
+                        padding: 50px 10vw;
+                        margin: auto;
+                        place-items: center;
+                }
+
+                .typewriter h1 {
+                        overflow: hidden;
+                        /* Ensures the content is not revealed until the animation */
+                        border-right: .15em solid orange;
+                        /* The typwriter cursor */
+                        white-space: nowrap;
+                        /* Keeps the content on a single line */
+                        margin: 0 auto;
+                        /* Gives that scrolling effect as the typing happens */
+                        letter-spacing: .15em;
+                        /* Adjust as needed */
+                        animation:
+                                typing 3.5s steps(40, end),
+                                blink-caret .75s step-end infinite;
+                }
+
+                /* The typing effect */
+                @keyframes typing {
+                        from {
+                                width: 0
+                        }
+
+                        to {
+                                width: 100%
+                        }
+                }
+
+                /* The typewriter cursor effect */
+                @keyframes blink-caret {
+
+                        from,
+                        to {
+                                border-color: transparent
+                        }
+
+                        50% {
+                                border-color: orange;
+                        }
+                }
+
+                img {
+                        height: 80vh;
+                        max-width: 100%;
+                        object-fit: cover;
+                        opacity: 0.4;
+                }
+
+                h1 {
+                        font-size: 4.8rem;
+                        line-height: 1;
+                        font-weight: 800;
+                        margin-bottom: 1rem;
+                        margin-top: 4rem;
+                        position: absolute;
+                        top: 10vw;
+                        left: 5vw;
+                        z-index: 4;
+                        overflow-wrap: break-word;
+                        hyphens: auto;
+                        display: block;
+                }
+
+                h1,
+                h2,
+                h3,
+                h4,
+                h5,
+                h6 {
+                        display: block;
+                }
+
+                b {
+                        color: red;
+                        font-size: 5vh;
+                        font-weight: bolder;
+                }
+
+                @media (max-width: 768px) {
+
+                        h1 {
+                                font-size: 14vw;
+                        }
+
+                        body {
+                                max-width: 100%;
+                        }
+
+                        b {
+                                font-size: .8rem;
+                        }
+
+                        h1 span {
+                                display: block;
+                        }
+
+                        h2 {
+                                font-size: 1.2rem;
+                                max-width: 50px;
+                        }
+
+                        h3 {
+                                font-size: 1rem;
+                        }
+
+
+                        h4 {
+                                font-size: 1.1rem;
+                                max-width: 400px;
+                        }
+
+                        h5 {
+                                font-size: .7rem;
+                                max-width: 400px;
+                        }
+
+                        p {
+                                font-size: .7rem;
+                        }
+                }
+
+                .credit {
+                        font-family: Termina, sans-serif;
+                }
+
+                .credit a {
+                        color: var(--text-color);
+                }
+
+                * {
+                        box-sizing: border-box;
+                }
+
+                #sectionPin {
+                        height: 100vh;
+                        overflow: hidden;
+                        display: flex;
+                        left: 0;
+                        background: var(--text-color);
+                        color: var(--bg-color);
+                }
+
+                .pin-wrap {
+                        height: 100vh;
+                        display: flex;
+                        justify-content: flex-start;
+                        align-items: center;
+                        padding: 50px 10vw;
+                }
+
+                .pin-wrap>* {
+                        min-width: 60vw;
+                        padding: 0 5vw;
+                }
+
+                p {
+                        position: absolute;
+                        bottom: 10vw;
+                        right: 10vw;
+                        width: 150px;
+                        line-height: 1.5;
+                }
+
+                button {
+                        background-color: red;
+                        /* Green */
+                        border: none;
+                        color: white;
+                        padding: 15px 32px;
+                        text-align: center;
+                        text-decoration: none;
+                        border-radius: 5%;
+                        top: 30%;
+                        right: 0%;
+                        position: fixed;
+                        z-index: 3000;
+                        display: inline-block;
+                        font-size: 16px;
+                        transition-duration: 0.4s;
+                }
+
+                button:hover {
+                        background-color: white;
+                        /* Green */
+                        color: red;
+                }
+
+                @media (max-width: 768px) {
+                        button {
+                                display: none;
+                        }
 	</style>
 	
 	<script>
@@ -187,130 +294,133 @@
 	</head>
 	
 	<body translate="no" >
-	<div class="container">
-	<section data-bgcolor="#bcb8ad" data-textcolor="#032f35">
+	 <div class="navbar">
+    <div>
+      <a href="index.html" style="width:50% !important">ENGINEERING</a> <a href="webportfolio" style="width:50% !important">WEB DEVELOPMENT</a>
+    </div>
+  </div>
+  <div class="container">
+    <section data-bgcolor="#bcb8ad" data-textcolor="#032f35">
+      <div class="typewriter" id="home">
+        <h1 data-scroll="" data-scroll-speed="1">Hi<br>
+        I’m<br>
+        Arnab</h1><button onclick="location.href='webportfolio'">Visit my Web Design Portfolio</button>
+        <p data-scroll="" data-scroll-speed="2" data-scroll-delay="0.2">Scroll Down, maybe?</p>
+      </div>
+    </section>
+    <section id="sectionPin">
+      <div class="pin-wrap">
+        <h2><b>E D U C A T I O N</b><br>
+        I did Mechanical Engineering from Memorial University (Class of 2021)</h2><img src="/web/20240319235048im_/https://arnabbrahma.com/grad.jpg" alt=" Arnab Brahma Mechanical Engineer in Training Canada ">
+        <h4><b>C U R R E N T<br>
+        P O S I T I O N<br></b>Now working full time as Mechanical Change Management Coordinator at Pennecon, Voisey's Bay, 6,000 tonne/day Nickel Mine facillity.</h4><img src="/web/20240319235048im_/https://arnabbrahma.com/Voise.jpg" alt=" Arnab Brahma Mechanical Engineer in Training Pennecon Liannu Voisey’s Bay Vale Mine Expansion ">
+        <h5><b>M O R E<br>
+        A B O U T<br>
+        C U R R E N T<br>
+        P O S I T I O N<br></b> -Interpret the contract and work with the project team to identify potential changes.<br>
+        -Develop change requests and compile documentation.<br>
+        -Assist in the planning and scheduling of additional scopes.<br>
+        -Communication with the client and subcontractors on a timely basis.<br>
+        -Review technical engineering drawings for compliance and progress.<br>
+        -Assist all the Project Managers/Engineers as required in project development and execution.</h5><img src="/web/20240319235048im_/https://arnabbrahma.com/pen.jpg" alt=" Arnab Brahma Mechanical Engineer in Training Pennecon Liannu Voisey’s Bay Vale Mine Expansion ">
+        <h3><b>P R E V I O U S<br>
+        P O S I T I O N<br></b>Previously worked with RothLochston in Voisey's Bay as a Project Coordinator for one year.<br>
+        -Received approval for over $10M of Change Orders.<br>
+        -Created task-lists for more than 5,000 hours of scope.</h3><img src="/web/20240319235048im_/https://arnabbrahma.com/map.jpg" alt=" Arnab Brahma Mechanical Engineer in Training Voisey’s Bay Vale Mine Expansion Newfoundland Canada">
+        <h5><b>M O R E<br>
+        A B O U T<br>
+        P R E V I O U S<br>
+        P O S I T I O N<br></b>As a Project Coordinator I was responsible for the management of Company project activities for estimation and delivery of a project to initial point of execution. This included the development of proposals/bids, plans budgets, and delivery of all equipment/tool/material for initialization of a project. As a Project Coordinator, I had to have the ability to work independently with minimal direction from the Project Manager. The role required a sound working knowledge of the technical specifications and standards used throughout the construction industry. I had to be resourceful and possessed demonstrated project management skills.</h5><img src="/web/20240319235048im_/https://arnabbrahma.com/Roth.jpg" alt=" Arnab Brahma Mechanical Engineer in Training RothLochston UNAAN Voisey’s Bay Vale Mine Expansion">
+        <h3><b>R E L I A B I L I T Y<br>
+        E N G I N E E R I N G<br></b>Work Term with North Atlantic Refining Ltd.<br>
+        - 130,000 barrels of Oil refined every day.<br>
+        - Reliability Engineering Coop. Fixed over 20,000 asset hierarchy issues.</h3><img src="/web/20240319235048im_/https://arnabbrahma.com/Refine.jpg" alt=" Arnab Brahma Mechanical Engineer in Training Come by Chance Refinery North Atlantic Refinery Braya Renewables">
+        <h3><b>M A I N T E N A N C E<br>
+        E N G I N E E R I N G<br></b>Coop Placement in The Cahill Group<br>
+        - Go to person for any material/ equipment issue.<br>
+        - Looked into scheduled maintenance, and tool procurement.</h3><img src="/web/20240319235048im_/https://arnabbrahma.com/Cahil.jpg" alt=" Arnab Brahma Mechanical Engineer in Training The Cahill Group Memorial University Core Sciences Building ">
+        <h3><b>A U T O M O T I V E<br>
+        E N G I N E E R I N G<br></b>Work Term with F&amp;P Manufacturing Inc., automotive industry as Assembly/ Quality Engineering Coop. Performed leak testing, used press machines, multiple assembly tools, and robotic machines. Additionally, performed quality checks, and more.</h3><img src="/web/20240319235048im_/https://arnabbrahma.com/FP.jpg" alt=" Arnab Brahma Mechanical Engineer in Training Automotive Industry F&amp;P Manufacturing">
+        <h3><b>P R O J E C T<br>
+        E N G I N E E R I N G<br></b>Work Term with Town of Baie Verte as Project Engineering Coop. This involved town construction work order processing, creation of workpack, and more. Additionally, municipal applications, reports were created in this Work Term.</h3><img src="/web/20240319235048im_/https://arnabbrahma.com/baie.jpg" alt=" Arnab Brahma Mechanical Engineer in Training Town of Baie Verte F&amp;P Manufacturing">
+        <h2><b>C O N N E C T<br></b>Download my <a href="Professional_Resume_Arnab_Brahma.pdf">Resume</a>!<br>
+        Thanks!<br>
+        <a href="https://web.archive.org/web/20240319235048/https://www.linkedin.com/in/arnab-brahma/" target="_blank"><img src="/web/20240319235048im_/https://arnabbrahma.com/link.png" alt="Arnab Brahma Linkedin" style="height: 20px;"></a><br>
+        <br>
+        <a href="/web/20240319235048/https://arnabbrahma.com/index.html"><img src="/web/20240319235048im_/https://arnabbrahma.com/logo.png" alt="Arnab Brahma Mechanical Engineer in Training, Canada Logo" style="height:auto; width:auto;"></a></h2>
+      </div>
+    </section>
+    <script src="/web/20240319235048js_/https://arnabbrahma.com/script.js"></script> 
+    <script src="/web/20240319235048js_/https://arnabbrahma.com/script2.js"></script> 
+    <script src="/web/20240319235048js_/https://arnabbrahma.com/script3.js"></script> 
+    <script id="rendered-js">
 
-	<div class="typewriter">
-	<h1 data-scroll data-scroll-speed="1"><span>Hi</span> <span>I’m</span> <span>Arnab</span></h1>
-	<p data-scroll data-scroll-speed="2" data-scroll-delay="0.2"> Scroll Down, maybe? </p>
-	</div>
-	
-	</section>
-	
-	<section id="sectionPin">
-	<div class="pin-wrap">
-	<h2>I did Mechanical Engineering from Memorial University (Class of 2021)</h2>
-<h3>Now working full time <b>Mechanical Change Management Coordinator</b> <br> Pennecon <br> Voisey's Bay</h3>
-	<img src="Voise.png" alt=" Arnab Brahma Mechanical Engineer in Training Pennecon Liannu Voisey’s Bay Vale Mine Expansion ">
-<h4>6,000 tonne/day Nickel Mine facillity, Pennecon got multiple projects here. I looked into the Change Orders, Cost tracking, and more.</h4>
 
-		</div>
-	</section>
+                        gsap.registerPlugin(ScrollTrigger);
 
-	<section data-bgcolor="#e3857a" data-textcolor="#f1dba7" style="padding-left: 50px;"><img src="Roth.jpg" alt=" Arnab Brahma Mechanical Engineer in Training RothLochston UNAAN Voisey’s Bay Vale Mine Expansion">
-	<h3 style="display:block;">Previously worked with RothLochston in Voisey's Bay as a Project Coordinator for one year. <br> -Received approval for over $10M of Change Orders. <br> -Created task-lists for more than 5,000 hours of scope.</h3>
-    <br><h5 style="display:block;">Additionally, As a Project Coordinator I was responsible for the management of Company project activities for estimation and delivery of a project to initial point of execution. This included the development of proposals/bids, plans budgets, and delivery of all equipment/tool/material for initialization of a project. As a Project Coordinator, I had to have the ability to work independently with minimal direction from the Project Manager. The role required a sound working knowledge of the technical specifications and standards used throughout the construction industry. I had to be resourceful and possessed demonstrated project management skills.</h5>
-	</section>
-   
+                        const pageContainer = document.querySelector(".container");
 
-	<section data-bgcolor="#e3857a" data-textcolor="#f1dba7" style="padding-left: 50px;"><img src="Refine.jpg" alt=" Arnab Brahma Mechanical Engineer in Training Come by Chance Refinery North Atlantic Refinery Braya Renewables"> <div>
-<h1 style="display:block;"> OIL AND GAS </h1>
-
-	<h3 style="display:block;">Work Term with North Atlantic Refining Ltd.<br> - 130,000 barrels of Oil refined every day.<br>- Reliability Engineering Coop. Fixed over 20,000 asset hierarchy issues.</h3>
-	</div></section>
+                        /* SMOOTH SCROLL */
+                        const scroller = new LocomotiveScroll({
+                                el: pageContainer,
+                                smooth: true
+                        });
 
 
-	<section data-bgcolor="#e3857a" data-textcolor="#f1dba7" style="padding-left: 50px;"><img src="Cahil.jpg" alt=" Arnab Brahma Mechanical Engineer in Training The Cahill Group Memorial University Core Sciences Building "> <div>
-<h1 style="display:block;"> ... and, </h1>
-	<h3 style="display:block;">Coop Placement in The Cahill Group <br> - Go to person for any material/ equipment issue. <br> - Looked into scheduled maintenance, and tool procurement.</h3>
-	</div>	</section>
+                        scroller.on("scroll", ScrollTrigger.update);
+
+                        ScrollTrigger.scrollerProxy(pageContainer, {
+                                scrollTop(value) {
+                                        return arguments.length ?
+                                                scroller.scrollTo(value, 0, 0) :
+                                                scroller.scroll.instance.scroll.y;
+                                },
+                                getBoundingClientRect() {
+                                        return {
+                                                left: 0,
+                                                top: 0,
+                                                width: window.innerWidth,
+                                                height: window.innerHeight
+                                        };
+
+                                },
+                                pinType: pageContainer.style.transform ? "transform" : "fixed"
+                        });
 
 
+                        ////////////////////////////////////
+                        ////////////////////////////////////
+                        window.addEventListener("load", function () {
+                                let pinBoxes = document.querySelectorAll(".pin-wrap > *");
+                                let pinWrap = document.querySelector(".pin-wrap");
+                                let pinWrapWidth = pinWrap.offsetWidth;
+                                let horizontalScrollLength = pinWrapWidth - window.innerWidth;
+
+                                // Pinning and horizontal scrolling
+
+                                gsap.to(".pin-wrap", {
+                                        scrollTrigger: {
+                                                scroller: pageContainer, //locomotive-scroll
+                                                scrub: true,
+                                                trigger: "#sectionPin",
+                                                pin: true,
+                                                // anticipatePin: 1,
+                                                start: "top top",
+                                                end: pinWrapWidth
+                                        },
+
+                                        x: -horizontalScrollLength,
+                                        ease: "none"
+                                });
 
 
-	<section data-bgcolor="#e3857a" data-textcolor="#f1dba7" style="padding-left: 50px;"><img src="FP.jpg" alt=" Arnab Brahma Mechanical Engineer in Training Automotive Industry Town of Baie Verte F&amp;P Manufacturing"> <div>
-<h1> Others </h1>
-	<h3>- Work Term with Town of Baie Verte as Project Engineering Coop<br>- Work Term with F&amp;P Manufacturing Inc. as Assembly/Quality Engineering Coop.</h3>
-	</div></section>
+                                ScrollTrigger.addEventListener("refresh", () => scroller.update()); //locomotive-scroll
 
-
-	<section data-bgcolor="#e3857a" data-textcolor="#f1dba7"> <div>
-<h2> Download my <a href="Professional_Resume_Arnab_Brahma.pdf">resume</a>! <br> Thanks! <br>  <center><a class="fa fa-linkedin" style="font-size:24px" href="https://www.linkedin.com/in/arnab-brahma/"></a><br><br>     <img src="https://i.imgur.com/ODT3YtK.png" alt="Arnab Brahma Mechanical Engineer in Training, Canada Logo" style="height:40px;"></center></h2>
-	</div></section>
-
-
-	<script src="https://cpwebassets.codepen.io/assets/common/stopExecutionOnTimeout-2c7831bb44f98c1391d6a4ffda0e1fd302503391ca806e7fcc7b9b87197aec26.js"></script>
-
-	
-	<script src='https://unpkg.com/gsap@3/dist/ScrollTrigger.min.js'></script>
-
-	<script src='https://cdnjs.cloudflare.com/ajax/libs/gsap/3.5.1/gsap.min.js'></script>
-
-	<script src='https://cdn.jsdelivr.net/npm/locomotive-scroll@3.5.4/dist/locomotive-scroll.min.js'></script>
-
-	<script id="rendered-js" >
-	gsap.registerPlugin(ScrollTrigger);
-	
-	const pageContainer = document.querySelector(".container");
-	
-	/* SMOOTH SCROLL */
-	const scroller = new LocomotiveScroll({
-	el: pageContainer,
-	smooth: true });
-	
-	
-	scroller.on("scroll", ScrollTrigger.update);
-	
-	ScrollTrigger.scrollerProxy(pageContainer, {
-	scrollTop(value) {
-	return arguments.length ?
-	scroller.scrollTo(value, 0, 0) :
-	scroller.scroll.instance.scroll.y;
-	},
-	getBoundingClientRect() {
-	return {
-	left: 0,
-	top: 0,
-	width: window.innerWidth,
-	height: window.innerHeight };
-	
-	},
-	pinType: pageContainer.style.transform ? "transform" : "fixed" });
-	
-	
-	////////////////////////////////////
-	////////////////////////////////////
-	window.addEventListener("load", function () {
-	let pinBoxes = document.querySelectorAll(".pin-wrap > *");
-	let pinWrap = document.querySelector(".pin-wrap");
-	let pinWrapWidth = pinWrap.offsetWidth;
-	let horizontalScrollLength = pinWrapWidth - window.innerWidth;
-	
-	// Pinning and horizontal scrolling
-	
-	gsap.to(".pin-wrap", {
-	scrollTrigger: {
-	scroller: pageContainer, //locomotive-scroll
-	scrub: true,
-	trigger: "#sectionPin",
-	pin: true,
-	// anticipatePin: 1,
-	start: "top top",
-	end: pinWrapWidth },
-	
-	x: -horizontalScrollLength,
-	ease: "none" });
-	
-	
-	ScrollTrigger.addEventListener("refresh", () => scroller.update()); //locomotive-scroll
-	
-	ScrollTrigger.refresh();
-	});
-	//# sourceURL=pen.js
-	</script>
-	
-	</div>
-	
+                                ScrollTrigger.refresh();
+                        });
+                        //# sourceURL=pen.js
+    </script>
+  </div>
 	</body>
 	
 	</html>
