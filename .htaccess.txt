@@ -1,0 +1,26 @@
+//Rewrite to www
+Options +FollowSymLinks
+RewriteEngine on
+RewriteCond %{HTTP_HOST} ^arnabbrahma.com[nc]
+RewriteRule ^(.*)$ http://www.arnabbrahma.com/$1 [r=301,nc]
+
+//Caching schema
+<FilesMatch "\.(jpg|png|css|js|html)$">
+Header set Cache-Control "max-age=172800"
+</FilesMatch>
+
+//Custom 400 errors
+ErrorDocument 400 /400.html
+
+//Custom 401 errors
+ErrorDocument 401 /400.html
+
+//Custom 403 errors
+ErrorDocument 403 /400.html
+
+//Custom 404 errors
+ErrorDocument 404 /400.html
+
+//Custom 500 errors
+ErrorDocument 500 /400.html
+ 
