@@ -5,10 +5,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="apple-mobile-web-app-title" content="Arnab Brahma Portfolio">
-  <meta name="description" content="Arnab Brahma is a Mechanical Engineer based in Canada. Works for the Voisey's Bay Mine Expansion Project with Pennecon.">
+  <meta name="description" content="Arnab Brahma is a Mechanical Engineer specializing in estimating, project coordination, and change management.">
   <meta name="keywords" content="Arnab, Brahma, Arnab Brahma, Mechanical Engineer Canada, Arnab Brahma Engineer, Arnab Brahma Canada, Pennecon Arnab, RothLochston Arnab, Cahill Arnab">
   <meta name="author" content="Arnab Brahma">
-
   <title>Arnab Brahma - Portfolio</title>
 
   <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
@@ -37,18 +36,6 @@
       overflow-x: hidden;
     }
 
-    section {
-      min-height: 100vh;
-      width: 100%;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      padding: 50px 5vw;
-      box-sizing: border-box;
-      text-align: center;
-    }
-
     .typewriter h1 {
       overflow: hidden;
       border-right: .15em solid orange;
@@ -71,7 +58,7 @@
     }
 
     img {
-      width: 90%;
+      width: 100%;
       max-width: 600px;
       height: auto;
       object-fit: cover;
@@ -83,17 +70,31 @@
       margin-bottom: 1rem;
     }
 
-    .pin-wrap {
+    section {
+      width: 100vw;
+      height: 100vh;
+      flex-shrink: 0;
+      scroll-snap-align: start;
       display: flex;
-      overflow-x: auto;
-      scroll-snap-type: x mandatory;
-      -webkit-overflow-scrolling: touch;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 2rem;
+      box-sizing: border-box;
     }
 
-    .pin-wrap > * {
-      flex: 0 0 80vw;
-      scroll-snap-align: start;
-      margin: 0 10vw;
+    .scroll-container {
+      display: flex;
+      flex-direction: row;
+      overflow-x: scroll;
+      scroll-snap-type: x mandatory;
+      width: 100vw;
+      height: 100vh;
+    }
+
+    .scroll-container::-webkit-scrollbar {
+      display: none;
     }
 
     footer {
@@ -122,59 +123,54 @@
 </head>
 
 <body>
-  <div class="container">
-    <section class="typewriter">
-      <h1><span>Hi</span> <span>I’m</span> <span>Arnab</span></h1>
-      <p>Scroll Down, maybe?</p>
-    </section>
+  <div class="typewriter">
+    <h1><span>Hi</span> <span>I’m</span> <span>Arnab</span></h1>
+    <p>Scroll ➡️</p>
+  </div>
 
-    <section id="sectionPin">
-      <div class="pin-wrap">
-        <div>
-          <h2>I did Mechanical Engineering from Memorial University (Class of 2021)</h2>
-          <h3>Now working full time as <b>Mechanical Change Management Coordinator</b> at Pennecon (Voisey's Bay)</h3>
-          <img src="Voise.png" alt="Voisey's Bay Project">
-          <h4>6,000 tonne/day Nickel Mine facility. I worked on Change Orders, Cost tracking, and more.</h4>
-        </div>
-      </div>
+  <div class="scroll-container">
+    <section>
+      <h2>Mechanical Engineer | Estimator</h2>
+      <h3>Pennecon Industrial Ltd</h3>
+      <img src="Voise.png" alt="Voisey's Bay Project">
+      <h4>Cost estimating, earned value, and productivity tracking.</h4>
     </section>
 
     <section>
       <img src="Roth.jpg" alt="RothLochston">
-      <h3>Previously with RothLochston at Voisey's Bay<br>- Approved over $10M in Change Orders<br>- Managed 5,000+ hours of scope</h3>
-      <p>Handled vendor relations, proposals, documentation, and technical support independently.</p>
+      <h2>RothLochston VEL Ltd</h2>
+      <h3>Change orders, procurement, and vendor coordination.</h3>
     </section>
 
     <section>
-      <img src="Refine.jpg" alt="North Atlantic Refining">
-      <h2>OIL AND GAS</h2>
-      <h3>North Atlantic Refinery – Reliability Engineering Coop<br>- 130,000 barrels/day<br>- Cleaned 20,000+ asset records</h3>
+      <img src="Refine.jpg" alt="North Atlantic Refinery">
+      <h2>North Atlantic Refinery</h2>
+      <h3>Reliability Engineering | MAXIMO system optimization</h3>
     </section>
 
     <section>
       <img src="Cahil.jpg" alt="Cahill Group">
-      <h2>... and,</h2>
-      <h3>Cahill Group – Maintenance Engineering Coop<br>- Managed materials and maintenance tools<br>- Scheduled tasks and procurement</h3>
+      <h2>The Cahill Group</h2>
+      <h3>Scheduled maintenance & material control</h3>
     </section>
 
     <section>
       <img src="FP.jpg" alt="Other Roles">
-      <h2>Others</h2>
-      <h3>Town of Baie Verte – Project Engineering Coop<br>F&P Manufacturing – Assembly/Quality Coop</h3>
+      <h2>Additional Experience</h2>
+      <h3>Town of Baie Verte | F&P Manufacturing</h3>
+      <p>GIS mapping and automation process engineering</p>
     </section>
 
     <section>
       <h2>Download my <a href="https://acrobat.adobe.com/link/track?uri=urn:aaid:scds:US:d6c0acb2-19ea-4fec-9754-1db716928e49">resume</a>!<br>Thanks!</h2>
-      <center>
-        <a class="fa fa-linkedin" style="font-size:24px" href="https://www.linkedin.com/in/arnab-brahma/"></a><br><br>
-        <img src="https://i.imgur.com/ODT3YtK.png" alt="Arnab Brahma Logo" style="height:40px;">
-      </center>
+      <a class="fa fa-linkedin" style="font-size:24px" href="https://www.linkedin.com/in/arnab-brahma/"></a><br><br>
+      <img src="https://i.imgur.com/ODT3YtK.png" alt="Arnab Brahma Logo" style="height:40px;">
     </section>
-
-    <footer>
-      &copy; 2025 Arnab Brahma. All rights reserved.
-    </footer>
   </div>
+
+  <footer>
+    &copy; 2025 Arnab Brahma. All rights reserved.
+  </footer>
 </body>
 
 </html>
