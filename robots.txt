@@ -1,0 +1,17 @@
+# robots.txt for arnabbrahma.com
+
+# Allow all search engines full access to the site
+User-agent: *
+Disallow: /private/
+Disallow: /test/
+Disallow: /temp/
+Allow: /
+
+# Optional: Disallow crawling of search result pages
+Disallow: /search
+
+# Sitemap location
+Sitemap: https://www.arnabbrahma.com/sitemap.xml
+
+# Host declaration (optional, used by some search engines)
+Host: www.arnabbrahma.com
