@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz for Reya</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .quiz-container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 600px;
+            width: 100%;
+            padding: 40px;
+            position: relative;
+        }
+
+        .score-display {
+            text-align: center;
+            font-size: 24px;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 20px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 12px;
+        }
+
+        .score-number {
+            color: #667eea;
+            font-size: 32px;
+        }
+
+        .feedback-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.8);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            animation: fadeInOverlay 0.3s ease;
+        }
+
+        .feedback-overlay.active {
+            display: flex;
+        }
+
+        @keyframes fadeInOverlay {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        .feedback-message {
+            background: white;
+            padding: 60px 80px;
+            border-radius: 20px;
+            text-align: center;
+            transform: scale(0.8);
+            animation: popIn 0.4s ease forwards;
+        }
+
+        @keyframes popIn {
+            to {
+                transform: scale(1);
+            }
+        }
+
+        .feedback-icon {
+            font-size: 80px;
+            margin-bottom: 20px;
+        }
+
+        .feedback-text {
+            font-size: 36px;
+            font-weight: 700;
+            margin: 0;
+        }
+
+        .feedback-text.correct {
+            color: #28a745;
+        }
+
+        .feedback-text.wrong {
+            color: #dc3545;
+        }
+
+        .error-message {
+            background: #fff3cd;
+            border: 2px solid #ffc107;
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 20px;
+            text-align: center;
+            animation: shake 0.5s ease;
+        }
+
+        .error-message p {
+            color: #856404;
+            font-size: 18px;
+            font-weight: 600;
+            margin: 0;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #e0e0e0;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            width: 0%;
+            transition: width 0.4s ease;
+        }
+
+        .question-container {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.4s ease;
+        }
+
+        .question-container.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .question-number {
+            color: #667eea;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        h2 {
+            color: #333;
+            font-size: 24px;
+            margin-bottom: 30px;
+            line-height: 1.4;
+        }
+
+        .question-image {
+            width: 100%;
+            max-width: 400px;
+            height: auto;
+            border-radius: 12px;
+            margin: 20px auto;
+            display: block;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .option {
+            background: #f8f9fa;
+            border: 2px solid transparent;
+            border-radius: 12px;
+            padding: 18px 24px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 16px;
+            color: #333;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .option:hover {
+            background: #e9ecef;
+            border-color: #667eea;
+            transform: translateX(5px);
+        }
+
+        .option:active {
+            transform: scale(0.98);
+        }
+
+        .result-container {
+            text-align: center;
+            display: none;
+        }
+
+        .result-container.active {
+            display: block;
+            opacity: 0;
+            animation: fadeIn 0.6s ease forwards;
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+
+        .result-icon {
+            font-size: 80px;
+            margin-bottom: 20px;
+        }
+
+        .result-title {
+            font-size: 32px;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .result-summary {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 30px;
+        }
+
+        .result-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .result-item:last-child {
+            border-bottom: none;
+        }
+
+        .restart-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            padding: 15px 40px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 30px;
+            transition: transform 0.2s ease;
+        }
+
+        .restart-btn:hover {
+            transform: scale(1.05);
+        }
+
+        .restart-btn:active {
+            transform: scale(0.95);
+        }
+    </style>
+</head>
+<body>
+    <div class="feedback-overlay" id="feedbackOverlay">
+        <div class="feedback-message" id="feedbackMessage">
+            <div class="feedback-icon" id="feedbackIcon"></div>
+            <p class="feedback-text" id="feedbackText"></p>
+        </div>
+    </div>
+
+    <div class="quiz-container">
+        <div class="score-display">
+            Score: <span class="score-number" id="scoreDisplay">0</span> / <span id="totalQuestions">8</span>
+        </div>
+
+        <div class="progress-bar">
+            <div class="progress-fill" id="progressFill"></div>
+        </div>
+
+        <div id="quizContent">
+            <!-- Questions will be inserted here -->
+        </div>
+
+        <div class="result-container" id="resultContainer">
+            <div class="result-icon">🎉</div>
+            <h2 class="result-title">Quiz Complete!</h2>
+            <p>You've answered all the questions.</p>
+            <div class="result-summary" id="resultSummary"></div>
+            <button class="restart-btn" onclick="restartQuiz()">Take Quiz Again</button>
+        </div>
+    </div>
+
+    <script>
+        const questions = [
+            {
+                question: "What is the capital of France?",
+                options: ["London", "Berlin", "Paris", "Madrid"],
+                correct: 2 // Index of correct answer (Paris)
+            },
+            {
+                question: "Which planet is shown in this image?",
+                image: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='300' viewBox='0 0 400 300'%3E%3Crect fill='%23000000' width='400' height='300'/%3E%3Ccircle cx='200' cy='150' r='80' fill='%23CD5C5C'/%3E%3Cellipse cx='180' cy='130' rx='15' ry='20' fill='%23A0522D' opacity='0.4'/%3E%3Cellipse cx='220' cy='160' rx='20' ry='25' fill='%23A0522D' opacity='0.3'/%3E%3Cellipse cx='200' cy='180' rx='25' ry='15' fill='%23A0522D' opacity='0.5'/%3E%3Ccircle cx='190' cy='140' r='8' fill='%23A0522D' opacity='0.6'/%3E%3Ccircle cx='210' cy='145' r='6' fill='%238B4513' opacity='0.4'/%3E%3Ccircle cx='205' cy='170' r='10' fill='%23A0522D' opacity='0.5'/%3E%3C/svg%3E",
+                options: ["Venus", "Mars", "Jupiter", "Saturn"],
+                correct: 1, // Index of correct answer (Mars)
+                hasImage: true
+            },
+            {
+                question: "What is the largest ocean on Earth?",
+                options: ["Atlantic Ocean", "Indian Ocean", "Arctic Ocean", "Pacific Ocean"],
+                correct: 3 // Index of correct answer (Pacific Ocean)
+            },
+            {
+                question: "Which famous painting is shown below?",
+                image: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='500' viewBox='0 0 400 500'%3E%3Crect fill='%23D2B48C' width='400' height='500'/%3E%3Crect x='100' y='50' width='200' height='400' fill='%23F5DEB3' stroke='%238B4513' stroke-width='4'/%3E%3Cellipse cx='200' cy='180' rx='60' ry='70' fill='%23FFD7B5'/%3E%3Cpath d='M 170 160 Q 170 150 180 150 Q 190 150 190 160' fill='%23000'/%3E%3Cpath d='M 210 160 Q 210 150 220 150 Q 230 150 230 160' fill='%23000'/%3E%3Cellipse cx='200' cy='195' rx='15' ry='12' fill='%23FFB6C1'/%3E%3Cpath d='M 180 210 Q 200 220 220 210' stroke='%23000' stroke-width='2' fill='none'/%3E%3Cpath d='M 140 140 Q 130 100 150 80 Q 200 60 250 80 Q 270 100 260 140' fill='%23000'/%3E%3Crect x='150' y='250' width='100' height='150' fill='%23654321'/%3E%3Cpath d='M 150 250 L 180 280 L 180 400 L 150 400 Z' fill='%234A3728'/%3E%3Cpath d='M 250 250 L 220 280 L 220 400 L 250 400 Z' fill='%234A3728'/%3E%3C/svg%3E",
+                options: ["Starry Night by Van Gogh", "Mona Lisa by Da Vinci", "The Scream by Munch", "Girl with Pearl Earring"],
+                correct: 1, // Index of correct answer (Mona Lisa by Da Vinci)
+                hasImage: true
+            },
+            {
+                question: "What animal is shown in this picture?",
+                image: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='300' viewBox='0 0 400 300'%3E%3Crect fill='%2387CEEB' width='400' height='300'/%3E%3Cellipse cx='200' cy='200' rx='80' ry='60' fill='%23FF6B6B'/%3E%3Cellipse cx='200' cy='180' rx='90' ry='70' fill='%23FF8E8E'/%3E%3Cellipse cx='200' cy='160' rx='100' ry='80' fill='%23FFA5A5'/%3E%3Ccircle cx='180' cy='150' r='8' fill='%23000'/%3E%3Ccircle cx='220' cy='150' r='8' fill='%23000'/%3E%3Cellipse cx='200' cy='165' rx='6' ry='8' fill='%23FF1493'/%3E%3Cpath d='M 180 175 Q 200 185 220 175' stroke='%23000' stroke-width='2' fill='none'/%3E%3Cellipse cx='150' cy='140' rx='35' ry='45' fill='%23FFA5A5'/%3E%3Cellipse cx='250' cy='140' rx='35' ry='45' fill='%23FFA5A5'/%3E%3Cellipse cx='145' cy='135' rx='10' ry='12' fill='%23FFB6C1'/%3E%3Cellipse cx='255' cy='135' rx='10' ry='12' fill='%23FFB6C1'/%3E%3C/svg%3E",
+                options: ["Dog", "Cat", "Pig", "Rabbit"],
+                correct: 2, // Index of correct answer (Pig)
+                hasImage: true
+            },
+            {
+                question: "What is the smallest prime number?",
+                options: ["0", "1", "2", "3"],
+                correct: 2 // Index of correct answer (2)
+            },
+            {
+                question: "Which continent is shown in this map?",
+                image: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400' viewBox='0 0 400 400'%3E%3Crect fill='%234A90E2' width='400' height='400'/%3E%3Cpath d='M 200 80 L 220 100 L 240 95 L 260 110 L 280 105 L 300 130 L 310 150 L 320 180 L 315 210 L 300 240 L 280 270 L 250 290 L 220 300 L 190 305 L 160 300 L 140 285 L 120 260 L 110 230 L 100 200 L 95 170 L 100 140 L 110 120 L 130 100 L 150 90 L 170 85 Z' fill='%2366BB6A' stroke='%232E7D32' stroke-width='2'/%3E%3Cellipse cx='180' cy='180' rx='25' ry='35' fill='%234A90E2'/%3E%3Cpath d='M 230 160 L 245 165 L 250 180 L 240 190 L 225 185 Z' fill='%23C8E6C9'/%3E%3Cpath d='M 160 220 L 175 225 L 180 240 L 170 250 L 155 245 Z' fill='%23C8E6C9'/%3E%3Ccircle cx='200' cy='250' r='8' fill='%234A90E2'/%3E%3C/svg%3E",
+                options: ["Asia", "Africa", "South America", "Australia"],
+                correct: 1, // Index of correct answer (Africa)
+                hasImage: true
+            },
+            {
+                question: "Do you agree that this quiz is awesome?",
+                options: ["Yes", "No"],
+                correct: 0, // Index of correct answer (Yes)
+                isFinalQuestion: true
+            }
+        ];
+
+        let currentQuestion = 0;
+        let answers = [];
+        let score = 0;
+
+        function displayQuestion() {
+            const quizContent = document.getElementById('quizContent');
+            
+            if (currentQuestion < questions.length) {
+                const q = questions[currentQuestion];
+                
+                let imageHTML = '';
+                if (q.hasImage && q.image) {
+                    imageHTML = `<img src="${q.image}" alt="Question image" class="question-image">`;
+                }
+
+                let optionsHTML = '';
+                q.options.forEach((option, index) => {
+                    optionsHTML += `<div class="option" onclick="selectAnswer(${index}, '${option.replace(/'/g, "\\'")}')">
+                        ${option}
+                    </div>`;
+                });
+
+                quizContent.innerHTML = `
+                    <div class="question-container active">
+                        <div class="question-number">Question ${currentQuestion + 1} of ${questions.length}</div>
+                        <h2>${q.question}</h2>
+                        ${imageHTML}
+                        <div class="options">
+                            ${optionsHTML}
+                        </div>
+                        <div id="errorMessage"></div>
+                    </div>
+                `;
+
+                updateProgress();
+            } else {
+                showResults();
+            }
+        }
+
+        function selectAnswer(index, option) {
+            const currentQ = questions[currentQuestion];
+            const isCorrect = index === currentQ.correct;
+            
+            // Special handling for final question (question 8)
+            if (currentQ.isFinalQuestion && !isCorrect) {
+                // Show error message and don't proceed
+                const errorDiv = document.getElementById('errorMessage');
+                errorDiv.innerHTML = `
+                    <div class="error-message">
+                        <p>You're wrong. Select the correct option.</p>
+                    </div>
+                `;
+                return; // Don't proceed to next question
+            }
+
+            answers.push({
+                question: currentQ.question,
+                answer: option,
+                correct: isCorrect
+            });
+
+            if (isCorrect) {
+                score++;
+                updateScore();
+                showFeedback(true);
+            } else {
+                showFeedback(false);
+            }
+
+            currentQuestion++;
+
+            // Wait for feedback animation, then show next question
+            setTimeout(() => {
+                hideFeedback();
+                setTimeout(() => {
+                    displayQuestion();
+                }, 300);
+            }, 1500);
+        }
+
+        function showFeedback(isCorrect) {
+            const overlay = document.getElementById('feedbackOverlay');
+            const icon = document.getElementById('feedbackIcon');
+            const text = document.getElementById('feedbackText');
+
+            if (isCorrect) {
+                icon.textContent = '✓';
+                text.textContent = 'Correct!';
+                text.className = 'feedback-text correct';
+            } else {
+                icon.textContent = '✗';
+                text.textContent = "You're Wrong!";
+                text.className = 'feedback-text wrong';
+            }
+
+            overlay.classList.add('active');
+        }
+
+        function hideFeedback() {
+            const overlay = document.getElementById('feedbackOverlay');
+            overlay.classList.remove('active');
+        }
+
+        function updateScore() {
+            document.getElementById('scoreDisplay').textContent = score;
+        }
+
+        function updateProgress() {
+            const progress = (currentQuestion / questions.length) * 100;
+            document.getElementById('progressFill').style.width = progress + '%';
+        }
+
+        function showResults() {
+            document.getElementById('quizContent').style.display = 'none';
+            const resultContainer = document.getElementById('resultContainer');
+            resultContainer.classList.add('active');
+
+            // Update result title based on score
+            const resultTitle = document.querySelector('.result-title');
+            const percentage = (score / questions.length) * 100;
+            
+            if (percentage === 100) {
+                resultTitle.textContent = 'Perfect Score! 🌟';
+            } else if (percentage >= 75) {
+                resultTitle.textContent = 'Great Job! 🎉';
+            } else if (percentage >= 50) {
+                resultTitle.textContent = 'Good Effort! 👍';
+            } else {
+                resultTitle.textContent = 'Keep Practicing! 💪';
+            }
+
+            let summaryHTML = `<div style="font-size: 20px; margin-bottom: 20px; font-weight: 600;">
+                Final Score: ${score} / ${questions.length}
+            </div>`;
+            
+            answers.forEach((item, index) => {
+                const statusIcon = item.correct ? '✓' : '✗';
+                const statusColor = item.correct ? '#28a745' : '#dc3545';
+                summaryHTML += `
+                    <div class="result-item">
+                        <div><strong>Q${index + 1}:</strong> ${item.answer}</div>
+                        <span style="color: ${statusColor}; font-size: 20px; font-weight: bold;">${statusIcon}</span>
+                    </div>
+                `;
+            });
+
+            document.getElementById('resultSummary').innerHTML = summaryHTML;
+            updateProgress();
+        }
+
+        function restartQuiz() {
+            currentQuestion = 0;
+            answers = [];
+            score = 0;
+            updateScore();
+            document.getElementById('quizContent').style.display = 'block';
+            document.getElementById('resultContainer').classList.remove('active');
+            displayQuestion();
+        }
+
+        // Initialize quiz
+        document.getElementById('totalQuestions').textContent = questions.length;
+        displayQuestion();
+    </script>
+</body>
+</html>
