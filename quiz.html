@@ -487,13 +487,13 @@
             const percentage = (score / questions.length) * 100;
             
             if (percentage === 100) {
-                resultTitle.textContent = 'Perfect Score! 🌟';
+                resultTitle.textContent = 'Valentine confirmed! 🌟';
             } else if (percentage >= 75) {
-                resultTitle.textContent = 'Great Job! 🎉';
+                resultTitle.textContent = 'I wish you were my valentine, but you didn't answer things correctly! 🎉';
             } else if (percentage >= 50) {
-                resultTitle.textContent = 'Good Effort! 👍';
+                resultTitle.textContent = 'Really bad. I expected better from you! 👍';
             } else {
-                resultTitle.textContent = 'Keep Practicing! 💪';
+                resultTitle.textContent = 'I will find someone else. I thought you'll answer these questions perfectly! 💪';
             }
 
             let summaryHTML = `<div style="font-size: 20px; margin-bottom: 20px; font-weight: 600;">
