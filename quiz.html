@@ -58,10 +58,20 @@
             justify-content: center;
             align-items: center;
             z-index: 1000;
+            animation: fadeInOverlay 0.3s ease;
         }
 
         .feedback-overlay.active {
             display: flex;
+        }
+
+        @keyframes fadeInOverlay {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
         }
 
         .feedback-message {
@@ -69,12 +79,14 @@
             padding: 60px 80px;
             border-radius: 20px;
             text-align: center;
+            transform: scale(0.8);
             animation: popIn 0.4s ease forwards;
         }
 
         @keyframes popIn {
-            from { transform: scale(0.8); }
-            to { transform: scale(1); }
+            to {
+                transform: scale(1);
+            }
         }
 
         .feedback-icon {
@@ -85,10 +97,16 @@
         .feedback-text {
             font-size: 36px;
             font-weight: 700;
+            margin: 0;
         }
 
-        .feedback-text.correct { color: #ff1744; }
-        .feedback-text.wrong { color: #9e9e9e; }
+        .feedback-text.correct {
+            color: #ff1744;
+        }
+
+        .feedback-text.wrong {
+            color: #9e9e9e;
+        }
 
         .error-message {
             background: #ffebee;
@@ -104,6 +122,7 @@
             color: #c62828;
             font-size: 18px;
             font-weight: 600;
+            margin: 0;
         }
 
         @keyframes shake {
@@ -128,13 +147,39 @@
             transition: width 0.4s ease;
         }
 
+        .question-container {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.4s ease;
+        }
+
+        .question-container.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .question-number {
+            color: #ff6b9d;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        h2 {
+            color: #333;
+            font-size: 24px;
+            margin-bottom: 30px;
+            line-height: 1.4;
+        }
+
         .question-image {
             width: 100%;
             max-width: 400px;
-            max-height: 300px;
-            object-fit: cover;
+            height: auto;
             border-radius: 12px;
-            margin: 0 auto 20px auto;
+            margin: 20px auto;
             display: block;
             box-shadow: 0 4px 12px rgba(255, 107, 157, 0.3);
         }
@@ -154,6 +199,8 @@
             transition: all 0.3s ease;
             font-size: 16px;
             color: #333;
+            position: relative;
+            overflow: hidden;
         }
 
         .option:hover {
@@ -162,22 +209,54 @@
             transform: translateX(5px);
         }
 
+        .option:active {
+            transform: scale(0.98);
+        }
+
         .result-container {
             text-align: center;
             display: none;
         }
 
-        .result-container.active { display: block; }
+        .result-container.active {
+            display: block;
+            opacity: 0;
+            animation: fadeIn 0.6s ease forwards;
+        }
 
-        .result-icon { font-size: 80px; margin-bottom: 20px; }
-        .result-title { font-size: 28px; color: #333; margin-bottom: 20px; }
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+
+        .result-icon {
+            font-size: 80px;
+            margin-bottom: 20px;
+        }
+
+        .result-title {
+            font-size: 32px;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .result-summary {
+            background: #fff0f5;
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 30px;
+        }
 
         .result-item {
             display: flex;
             justify-content: space-between;
             padding: 10px 0;
             border-bottom: 1px solid #ffd6e0;
-            text-align: left;
+        }
+
+        .result-item:last-child {
+            border-bottom: none;
         }
 
         .restart-btn {
@@ -186,15 +265,25 @@
             border: none;
             border-radius: 12px;
             padding: 15px 40px;
+            font-size: 16px;
             font-weight: 600;
             cursor: pointer;
             margin-top: 30px;
+            transition: transform 0.2s ease;
+        }
+
+        .restart-btn:hover {
+            transform: scale(1.05);
+        }
+
+        .restart-btn:active {
+            transform: scale(0.95);
         }
     </style>
 </head>
 <body>
     <div class="feedback-overlay" id="feedbackOverlay">
-        <div class="feedback-message">
+        <div class="feedback-message" id="feedbackMessage">
             <div class="feedback-icon" id="feedbackIcon"></div>
             <p class="feedback-text" id="feedbackText"></p>
         </div>
@@ -209,17 +298,27 @@
             <div class="progress-fill" id="progressFill"></div>
         </div>
 
-        <div id="quizContent"></div>
+        <div id="quizContent">
+            <!-- Questions will be inserted here -->
+        </div>
 
         <div class="result-container" id="resultContainer">
             <div class="result-icon">💕</div>
             <h2 class="result-title">Quiz Complete!</h2>
+            <p>You've answered all the questions.</p>
             <div class="result-summary" id="resultSummary"></div>
             <button class="restart-btn" onclick="restartQuiz()">Take Quiz Again ❤️</button>
         </div>
     </div>
 
     <script>
+        const imageUrls = {
+            q2: "https://i.postimg.cc/3JzZPwDD/2025-01-05-00-55-52-700.jpg",  // Romantic beach photo (couple in water, pointing)
+            q4: "https://i.postimg.cc/HsFtfL7Q/DSC03380.jpg",  // Wedding photo
+            q5: "https://i.postimg.cc/dQbkFZ4B/2025-07-19-12-39-26-69011.jpg",  // Strawberry picking photo
+            q7: "https://i.postimg.cc/RVw3ZCD7/2025-12-09-13-56-54-140-(1).jpg"   // Cancun beach photo
+        };
+
         const questions = [
             {
                 question: "Where did I find you? 💘",
@@ -228,8 +327,8 @@
             },
             {
                 question: "What am I showing you?? 💑",
-                image: "https://i.postimg.cc/GHJYDdKc/2025-01-05-00-55-52-700.jpg",
-                options: ["Random couple", "Sea beach", "I’m showing you the life I want… and you’re in it.😍", "A lion"],
+                image: imageUrls.q2,
+                options: ["Random couple", "Sea beach", "I'm showing you the life I want… and you're in it.😍", "A lion"],
                 correct: 2,
                 hasImage: true
             },
@@ -240,14 +339,14 @@
             },
             {
                 question: "What am I looking at? 👀",
-                image: "https://i.postimg.cc/GHJYDdK2/DSC03380.jpg",
+                image: imageUrls.q4,
                 options: ["My bank account, which happens to be zero", "A picture of Mona Lisa", "A cat", "My lady, my love, the prettiest lady ever 💒"],
                 correct: 3,
                 hasImage: true
             },
             {
                 question: "Who's sweeter than these strawberries? 💗",
-                image: "https://i.postimg.cc/dD9tm3Mk/2025-07-19-12-39-26-69011.jpg",
+                image: imageUrls.q5,
                 options: ["YOU, YOU, and ONLY YOU💗", "Mexican Chillies", "Donut with Chocolate Syrup", "Cake from Costco"],
                 correct: 0,
                 hasImage: true
@@ -259,7 +358,7 @@
             },
             {
                 question: "What's the location, and why did we go there? 📍",
-                image: "https://i.postimg.cc/Whbp9Vjz/2025-12-09-13-56-54-140-1.jpg",
+                image: imageUrls.q7,
                 options: ["Italy, We went to eat Pizza", "Australia, We went to have a fight with a Kangaroo", "Cancun, We went for a second honeymoon trip 🍯", "Mars, we went there to look for water"],
                 correct: 2,
                 hasImage: true
@@ -278,51 +377,75 @@
 
         function displayQuestion() {
             const quizContent = document.getElementById('quizContent');
-            updateProgress();
-
+            
             if (currentQuestion < questions.length) {
                 const q = questions[currentQuestion];
-                let imageHTML = q.hasImage ? `<img src="${q.image}" alt="Question" class="question-image">` : '';
                 
-                let optionsHTML = q.options.map((opt, i) => `
-                    <div class="option" onclick="selectAnswer(${i}, '${opt.replace(/'/g, "\\'")}')">
-                        ${opt}
-                    </div>
-                `).join('');
+                let imageHTML = '';
+                if (q.hasImage && q.image) {
+                    imageHTML = `<img src="${q.image}" alt="Question image" class="question-image">`;
+                }
+
+                let optionsHTML = '';
+                q.options.forEach((option, index) => {
+                    optionsHTML += `<div class="option" onclick="selectAnswer(${index}, '${option.replace(/'/g, "\\'")}')">
+                        ${option}
+                    </div>`;
+                });
 
                 quizContent.innerHTML = `
                     <div class="question-container active">
                         <div class="question-number">Question ${currentQuestion + 1} of ${questions.length}</div>
                         <h2>${q.question}</h2>
                         ${imageHTML}
-                        <div class="options">${optionsHTML}</div>
+                        <div class="options">
+                            ${optionsHTML}
+                        </div>
                         <div id="errorMessage"></div>
                     </div>
                 `;
+
+                updateProgress();
             } else {
                 showResults();
             }
         }
 
-        function selectAnswer(index, optionText) {
-            const q = questions[currentQuestion];
-            const isCorrect = index === q.correct;
-
-            if (q.isFinalQuestion && !isCorrect) {
-                document.getElementById('errorMessage').innerHTML = `
-                    <div class="error-message"><p>Shut up. You're already my valentine. You only have ONE choice. ❤️</p></div>`;
+        function selectAnswer(index, option) {
+            const currentQ = questions[currentQuestion];
+            const isCorrect = index === currentQ.correct;
+            
+            if (currentQ.isFinalQuestion && !isCorrect) {
+                const errorDiv = document.getElementById('errorMessage');
+                errorDiv.innerHTML = `
+                    <div class="error-message">
+                        <p>Shut up. You're already my valentine. You only have ONE choice. ❤️</p>
+                    </div>
+                `;
                 return;
             }
 
-            answers.push({ question: q.question, answer: optionText, correct: isCorrect });
-            if (isCorrect) { score++; updateScore(); }
-            
-            showFeedback(isCorrect);
+            answers.push({
+                question: currentQ.question,
+                answer: option,
+                correct: isCorrect
+            });
+
+            if (isCorrect) {
+                score++;
+                updateScore();
+                showFeedback(true);
+            } else {
+                showFeedback(false);
+            }
+
+            currentQuestion++;
 
             setTimeout(() => {
                 hideFeedback();
-                currentQuestion++;
-                displayQuestion();
+                setTimeout(() => {
+                    displayQuestion();
+                }, 300);
             }, 1500);
         }
 
@@ -330,44 +453,74 @@
             const overlay = document.getElementById('feedbackOverlay');
             const icon = document.getElementById('feedbackIcon');
             const text = document.getElementById('feedbackText');
-            icon.textContent = isCorrect ? '💖' : '💔';
-            text.textContent = isCorrect ? 'Correct!' : "You're Wrong!";
-            text.className = `feedback-text ${isCorrect ? 'correct' : 'wrong'}`;
+
+            if (isCorrect) {
+                icon.textContent = '💖';
+                text.textContent = 'Correct!';
+                text.className = 'feedback-text correct';
+            } else {
+                icon.textContent = '💔';
+                text.textContent = "You're Wrong!";
+                text.className = 'feedback-text wrong';
+            }
+
             overlay.classList.add('active');
         }
 
-        function hideFeedback() { document.getElementById('feedbackOverlay').classList.remove('active'); }
-        function updateScore() { document.getElementById('scoreDisplay').textContent = score; }
-        function updateProgress() { 
-            const fill = (currentQuestion / questions.length) * 100;
-            document.getElementById('progressFill').style.width = fill + '%'; 
+        function hideFeedback() {
+            const overlay = document.getElementById('feedbackOverlay');
+            overlay.classList.remove('active');
+        }
+
+        function updateScore() {
+            document.getElementById('scoreDisplay').textContent = score;
+        }
+
+        function updateProgress() {
+            const progress = (currentQuestion / questions.length) * 100;
+            document.getElementById('progressFill').style.width = progress + '%';
         }
 
         function showResults() {
             document.getElementById('quizContent').style.display = 'none';
-            document.getElementById('resultContainer').classList.add('active');
-            
-            const percentage = (score / questions.length) * 100;
-            const title = document.querySelector('.result-title');
-            
-            if (percentage === 100) title.textContent = 'Valentine confirmed! ❤️😘❤️';
-            else if (percentage >= 75) title.textContent = 'You missed a few! 😕💕';
-            else title.textContent = 'I expected better! 😔💔';
+            const resultContainer = document.getElementById('resultContainer');
+            resultContainer.classList.add('active');
 
-            let summary = `<p>Final Score: ${score} / ${questions.length}</p><div class="result-summary">`;
-            answers.forEach((item, i) => {
-                summary += `
+            const resultTitle = document.querySelector('.result-title');
+            const percentage = (score / questions.length) * 100;
+            
+            if (percentage === 100) {
+                resultTitle.textContent = 'Valentine confirmed! ❤️😘❤️';
+            } else if (percentage >= 75) {
+                resultTitle.textContent = 'You didn\'t answer correctly! 😕💕';
+            } else if (percentage >= 50) {
+                resultTitle.textContent = 'Really bad. I expected better from you! 😔💔';
+            } else {
+                resultTitle.textContent = 'I will find someone else. I thought you\'d answer these perfectly! 😠💢';
+            }
+
+            let summaryHTML = `<div style="font-size: 20px; margin-bottom: 20px; font-weight: 600;">
+                Final Score: ${score} / ${questions.length} 💕
+            </div>`;
+            
+            answers.forEach((item, index) => {
+                const statusIcon = item.correct ? '💚' : '💔';
+                summaryHTML += `
                     <div class="result-item">
-                        <span><strong>Q${i+1}:</strong> ${item.answer}</span>
-                        <span>${item.correct ? '💚' : '💔'}</span>
-                    </div>`;
+                        <div><strong>Q${index + 1}:</strong> ${item.answer}</div>
+                        <span style="font-size: 24px;">${statusIcon}</span>
+                    </div>
+                `;
             });
-            summary += `</div>`;
-            document.getElementById('resultSummary').innerHTML = summary;
+
+            document.getElementById('resultSummary').innerHTML = summaryHTML;
+            updateProgress();
         }
 
         function restartQuiz() {
-            currentQuestion = 0; answers = []; score = 0;
+            currentQuestion = 0;
+            answers = [];
+            score = 0;
             updateScore();
             document.getElementById('quizContent').style.display = 'block';
             document.getElementById('resultContainer').classList.remove('active');
