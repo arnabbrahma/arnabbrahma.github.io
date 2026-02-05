@@ -323,45 +323,87 @@
             {
                 question: "Where did I find you? 💘",
                 options: ["Snapchat 👻", "Facebook 📘", "Instagram 📸", "Whatsapp 💬"],
-                correct: 2
+                correct: 2,
+                wrongFeedback: [
+                    "Snapchat? Really? We're not ghosts! 👻",
+                    "Facebook? No, Instagaram sounds cool! 📘",
+                    null,
+                    "WhatsApp? That's where we started chatting like crazy! 💬"
+                ]
             },
             {
                 question: "What am I showing you?? 💑",
                 image: imageUrls.q2,
-                options: ["Random couple 👫", "Sea beach 🌊", "I'm showing you the life I want… and you're in it.😍", "A lion 🦁"],
+                options: ["Random couple 👫", "Sea beach 🌊", "I'm showing you the life I want, and you're in it.😍", "A lion 🦁"],
                 correct: 2,
-                hasImage: true
+                hasImage: true,
+                wrongFeedback: [
+                    "Random couple? No, not the right time! 👫",
+                    "Just a beach? Look deeper! It's about us! 🌊",
+                    null,
+                    "You can see me later🦁"
+                ]
             },
             {
                 question: "Who loves you the most? 💖",
                 options: ["No one 💔", "Random Dude 🤷‍♂️", "Not Arnab 🙅‍♂️", "Arnab 😍"],
-                correct: 3
+                correct: 3,
+                wrongFeedback: [
+                    "NO ONE?! Wow, that hurts! 💔",
+                    "Random dude? I will block you then! 🤷‍♂️",
+                    "NOT Arnab? Who THEN?! 🙅‍♂️",
+                    null
+                ]
             },
             {
                 question: "What am I looking at? 👀",
                 image: imageUrls.q4,
                 options: ["My bank account, which happens to be zero 💸", "A picture of Mona Lisa 🖼️", "A cat 🐱", "My lady, my love, the prettiest lady ever 💒"],
                 correct: 3,
-                hasImage: true
+                hasImage: true,
+                wrongFeedback: [
+                    "My bank account? It's zero, yes, but I'm looking at YOU! 💸",
+                    "Mona Lisa? I've painted your picture in my heart, a picture even better than Mona Lisa's! 🖼️",
+                    "A cat? That's you too, but select option 4 🐱",
+                    null
+                ]
             },
             {
                 question: "Who's sweeter than these strawberries? 💗",
                 image: imageUrls.q5,
                 options: ["YOU, YOU, and ONLY YOU 💗", "Mexican Chillies 🌶️", "Donut with Chocolate Syrup 🍩", "Cake from Costco 🍰"],
                 correct: 0,
-                hasImage: true
+                hasImage: true,
+                wrongFeedback: [
+                    null,
+                    "Chillies?! That's me, spicyyy! 🌶️",
+                    "Donuts are sweet, but YOU'RE sweeter! 🍩",
+                    "Costco cake? Come on, you're MUCH sweeter! 🍰"
+                ]
             },
             {
                 question: "What's our wedding date? 💐",
                 options: ["1 Dec 2023 📅", "1 Dec 2024 📅", "15 Dec 2024 💝", "15 Dec, 2025 📅"],
-                correct: 2
+                correct: 2,
+                wrongFeedback: [
+                    "2023? Engagement Date, not our Wedding Date! 📅",
+                    "Close, but it's the 15th, not the 1st! 📅",
+                    null,
+                    "2025? That's our one year anniversary! 📅"
+                ]
             },
             {
                 question: "What's the location, and why did we go there? 📍",
                 image: imageUrls.q7,
                 options: ["Italy, We went to eat Pizza 🍕", "Australia, We went to have a fight with a Kangaroo 🦘", "Cancun, We went for a second honeymoon trip 🍯", "Mars, we went there to look for water 🚀"],
                 correct: 2,
-                hasImage: true
+                hasImage: true,
+                wrongFeedback: [
+                    "My wife cooks better pizza! 🍕",
+                    "We should go to fight Kangaroos, what do you think? 🦘",
+                    null,
+                    "Mars? Let's go to Pluto instead 🚀"
+                ]
             },
             {
                 question: "Will you be my valentine? 💝",
@@ -434,9 +476,12 @@
             if (isCorrect) {
                 score++;
                 updateScore();
-                showFeedback(true);
+                showFeedback(true, null);
             } else {
-                showFeedback(false);
+                const customFeedback = currentQ.wrongFeedback && currentQ.wrongFeedback[index] 
+                    ? currentQ.wrongFeedback[index] 
+                    : "You're Wrong!";
+                showFeedback(false, customFeedback);
             }
 
             currentQuestion++;
@@ -449,7 +494,7 @@
             }, 1500);
         }
 
-        function showFeedback(isCorrect) {
+        function showFeedback(isCorrect, customMessage) {
             const overlay = document.getElementById('feedbackOverlay');
             const icon = document.getElementById('feedbackIcon');
             const text = document.getElementById('feedbackText');
@@ -460,7 +505,7 @@
                 text.className = 'feedback-text correct';
             } else {
                 icon.textContent = '💔';
-                text.textContent = "You're Wrong!";
+                text.textContent = customMessage || "You're Wrong!";
                 text.className = 'feedback-text wrong';
             }
 
