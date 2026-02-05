@@ -314,20 +314,20 @@
     <script>
         const questions = [
             {
-                question: "What is the capital of France?",
-                options: ["London", "Berlin", "Paris", "Madrid"],
-                correct: 2 // Index of correct answer (Paris)
+                question: "Where did I find you?",
+                options: ["Snapchat", "Facebook", "Instagram", "Whatsapp"],
+                correct: 2 // Index of correct answer (Instagram)
             },
             {
-                question: "Which planet is shown in this image?",
+                question: "Wh?",
                 image: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='300' viewBox='0 0 400 300'%3E%3Crect fill='%23000000' width='400' height='300'/%3E%3Ccircle cx='200' cy='150' r='80' fill='%23CD5C5C'/%3E%3Cellipse cx='180' cy='130' rx='15' ry='20' fill='%23A0522D' opacity='0.4'/%3E%3Cellipse cx='220' cy='160' rx='20' ry='25' fill='%23A0522D' opacity='0.3'/%3E%3Cellipse cx='200' cy='180' rx='25' ry='15' fill='%23A0522D' opacity='0.5'/%3E%3Ccircle cx='190' cy='140' r='8' fill='%23A0522D' opacity='0.6'/%3E%3Ccircle cx='210' cy='145' r='6' fill='%238B4513' opacity='0.4'/%3E%3Ccircle cx='205' cy='170' r='10' fill='%23A0522D' opacity='0.5'/%3E%3C/svg%3E",
                 options: ["Venus", "Mars", "Jupiter", "Saturn"],
                 correct: 1, // Index of correct answer (Mars)
                 hasImage: true
             },
             {
-                question: "What is the largest ocean on Earth?",
-                options: ["Atlantic Ocean", "Indian Ocean", "Arctic Ocean", "Pacific Ocean"],
+                question: "Who loves you the most?",
+                options: ["No one", "Random Dude", "Not Arnab", "Arnab"],
                 correct: 3 // Index of correct answer (Pacific Ocean)
             },
             {
@@ -345,8 +345,8 @@
                 hasImage: true
             },
             {
-                question: "What is the smallest prime number?",
-                options: ["0", "1", "2", "3"],
+                question: "What's our wedding date?",
+                options: ["1 Dec 2023", "1 Dec 2024", "15 Dec 2024", "15 Dec, 2025"],
                 correct: 2 // Index of correct answer (2)
             },
             {
@@ -357,7 +357,7 @@
                 hasImage: true
             },
             {
-                question: "Do you agree that this quiz is awesome?",
+                question: "Will you be my valentine?",
                 options: ["Yes", "No"],
                 correct: 0, // Index of correct answer (Yes)
                 isFinalQuestion: true
@@ -414,7 +414,7 @@
                 const errorDiv = document.getElementById('errorMessage');
                 errorDiv.innerHTML = `
                     <div class="error-message">
-                        <p>You're wrong. Select the correct option.</p>
+                        <p>Shut up. You're already my valentine. You only have ONE choice.</p>
                     </div>
                 `;
                 return; // Don't proceed to next question
