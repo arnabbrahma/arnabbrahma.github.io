@@ -487,13 +487,13 @@
             const percentage = (score / questions.length) * 100;
             
             if (percentage === 100) {
-                resultTitle.textContent = 'Valentine confirmed! 🌟';
+                resultTitle.textContent = 'Valentine confirmed! ❤️😘❤️';
             } else if (percentage >= 75) {
-                resultTitle.textContent = 'I wish you were my valentine, but you didn't answer things correctly! 🎉';
+                resultTitle.textContent = 'I wish you were my valentine, but you didn't answer things correctly! 😕';
             } else if (percentage >= 50) {
-                resultTitle.textContent = 'Really bad. I expected better from you! 👍';
+                resultTitle.textContent = 'Really bad. I expected better from you! 😔';
             } else {
-                resultTitle.textContent = 'I will find someone else. I thought you'll answer these questions perfectly! 💪';
+                resultTitle.textContent = 'I will find someone else. I thought you'll answer these questions perfectly! 😠';
             }
 
             let summaryHTML = `<div style="font-size: 20px; margin-bottom: 20px; font-weight: 600;">
