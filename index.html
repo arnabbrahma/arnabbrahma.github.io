@@ -1026,6 +1026,19 @@
                     <form id="contactForm" action="https://formspree.io/f/xnqbkljd" method="POST" onsubmit="handleFormSubmit(event)" class="space-y-4">
                         <h4 class="text-sm font-bold uppercase text-white tracking-wider font-mono border-b border-white/5 pb-3">Send recruitment inquiry</h4>
                         
+                        <!-- Inline Error Notification -->
+                        <div id="formErrorContainer" class="hidden bg-red-950/40 border border-red-500/30 p-4 rounded text-xs text-red-200 font-sans space-y-2">
+                            <p class="font-semibold text-red-400">Formspree Submission Alert</p>
+                            <p id="formErrorMessage" class="leading-relaxed"></p>
+                            <div class="flex flex-wrap gap-x-3 gap-y-1 pt-1 font-mono text-[10px] uppercase">
+                                <button type="button" onclick="submitNatively()" class="text-blue-400 hover:text-blue-300 font-bold underline cursor-pointer">Submit Natively (Handles reCAPTCHA)</button>
+                                <span class="text-zinc-600">|</span>
+                                <button type="button" onclick="draftEmail()" class="text-blue-400 hover:text-blue-300 font-bold underline cursor-pointer">Draft Email Instead</button>
+                                <span class="text-zinc-600">|</span>
+                                <button type="button" onclick="dismissFormError()" class="text-zinc-400 hover:text-white underline cursor-pointer">Dismiss</button>
+                            </div>
+                        </div>
+
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                           <div>
                             <label class="block text-[10px] uppercase text-zinc-500 font-mono mb-1">Your Name *</label>
@@ -1222,6 +1235,10 @@
         function handleFormSubmit(event) {
             event.preventDefault();
             const form = event.target;
+            
+            // Hide previous errors if any
+            dismissFormError();
+
             const submitBtn = form.querySelector('button[type="submit"]');
             const originalBtnText = submitBtn.textContent;
             submitBtn.disabled = true;
@@ -1258,7 +1275,7 @@
                         successState.classList.add('form-fade-in');
                     }, 500);
                 } else {
-                    let errorMessage = "Formspree submission failed.";
+                    let errorMessage = "";
                     try {
                         const responseData = await response.json();
                         if (responseData && responseData.errors) {
@@ -1267,20 +1284,48 @@
                             errorMessage = responseData.error;
                         }
                     } catch (e) {
-                        errorMessage = `HTTP error ${response.status}. This usually means your Formspree form (ID: xnqbkljd) is either unverified, has ran out of credits, or needs to whitelist this preview domain.`;
+                        errorMessage = `HTTP error ${response.status}.`;
                     }
-                    
-                    alert(`${errorMessage}\n\nPlease verify your Formspree setup or use the "Draft Email Instead" button.`);
+
+                    if (!errorMessage) {
+                        errorMessage = "Formspree rejected the request.";
+                    }
+
+                    showFormError(`${errorMessage} This is typically due to active Google reCAPTCHA or missing domain approval in your Formspree dashboard.`);
                     submitBtn.disabled = false;
                     submitBtn.textContent = originalBtnText;
                 }
             })
             .catch(error => {
                 console.error("Formspree submission error:", error);
-                alert("There was a network or CORS error submitting to Formspree. This is expected in preview environments unless your Formspree settings allow submissions from any origin.\n\nPlease try the 'Draft Email Instead' button to send your message directly via email!");
+                showFormError("A network or CORS connection block occurred. This is standard in preview environments unless your Formspree settings allow cross-origin submissions from any domain.");
                 submitBtn.disabled = false;
                 submitBtn.textContent = originalBtnText;
             });
+        }
+
+        function showFormError(message) {
+            const errorContainer = document.getElementById('formErrorContainer');
+            const errorMessageEl = document.getElementById('formErrorMessage');
+            if (errorContainer && errorMessageEl) {
+                errorMessageEl.textContent = message;
+                errorContainer.classList.remove('hidden');
+                errorContainer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }
+        }
+
+        function dismissFormError() {
+            const errorContainer = document.getElementById('formErrorContainer');
+            if (errorContainer) {
+                errorContainer.classList.add('hidden');
+            }
+        }
+
+        function submitNatively() {
+            const form = document.getElementById('contactForm');
+            if (form) {
+                form.submit();
+            }
         }
 
         function resetContactForm() {
@@ -1302,6 +1347,7 @@
             const submitBtn = form.querySelector('button[type="submit"]');
             submitBtn.disabled = false;
             submitBtn.textContent = "Submit Inquiry";
+            dismissFormError();
         }
 
         // Backup Direct draft email action
@@ -1312,7 +1358,7 @@
             const message = document.getElementById('form-message').value || '';
             
             const subject = encodeURIComponent(`Recruitment Inquiry - ${company}`);
-            const body = encodeURIComponent(`Hello Arnab,\n\nMy name is ${name} from ${company}.\n\nMessage:\n${message}\n\nReach me back at: ${email}`);
+            const body = encodeURIComponent(`Hello Arnab,\\n\\nMy name is ${name} from ${company}.\\n\\nMessage:\\n${message}\\n\\nReach me back at: ${email}`);
             window.location.href = `mailto:abrahma@mun.ca?subject=${subject}&body=${body}`;
         }
     </script>
