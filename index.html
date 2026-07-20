@@ -144,19 +144,29 @@
             body > *:not(.print-only-resume) {
                 display: none !important;
             }
+            body {
+                margin: 0 !important;
+                padding: 0 !important;
+                background: #ffffff !important;
+            }
             .print-only-resume {
                 display: block !important;
                 visibility: visible !important;
                 background: #ffffff !important;
                 color: #000000 !important;
                 width: 100% !important;
+                margin: 0 !important;
+                padding-left: 0 !important;
                 font-family: 'Inter', system-ui, -apple-system, sans-serif !important;
                 font-size: 11px !important;
                 line-height: 1.4 !important;
             }
             @page {
                 size: letter portrait;
-                margin: 0.4in 0.4in 0.4in 0.4in;
+                margin-top: 0.4in;
+                margin-right: 0.4in;
+                margin-bottom: 0.4in;
+                margin-left: 0in;
             }
             * {
                 -webkit-print-color-adjust: exact !important;
@@ -377,10 +387,6 @@
                     </div>
                 </div>
 
-                <!-- Portfolio Coordinate -->
-                <div class="pt-3 border-t border-zinc-200">
-                    <p class="text-[8px] text-zinc-400 font-mono text-center leading-snug">Verified digital portfolio: ais-pre-lbka2qxybmmts2a6pavoxb-465544257559.us-east1.run.app</p>
-                </div>
             </div>
         </div>
     </div>
