@@ -139,6 +139,42 @@
             animation: blink 1s step-start infinite;
         }
 
+        /* Smooth transitions for the contact form animation */
+        .form-fade-out {
+            animation: formFadeOut 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
+        .form-fade-in {
+            animation: formFadeIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+        }
+        @keyframes formFadeOut {
+            0% { opacity: 1; transform: scale(1) translateY(0); }
+            100% { opacity: 0; transform: scale(0.95) translateY(-20px); filter: blur(4px); }
+        }
+        @keyframes formFadeIn {
+            0% { opacity: 0; transform: scale(0.9) translateY(20px); }
+            100% { opacity: 1; transform: scale(1) translateY(0); }
+        }
+
+        /* Animated SVG Checkmark */
+        .checkmark-circle {
+            stroke-dasharray: 166;
+            stroke-dashoffset: 166;
+            stroke-width: 2;
+            stroke-miterlimit: 10;
+            stroke: #3b82f6;
+            fill: none;
+            animation: stroke 0.6s cubic-bezier(0.65, 0, 0.45, 1) forwards;
+        }
+        .checkmark-kick {
+            transform-origin: 50% 50%;
+            stroke-dasharray: 48;
+            stroke-dashoffset: 48;
+            animation: stroke 0.3s cubic-bezier(0.65, 0, 0.45, 1) 0.6s forwards;
+        }
+        @keyframes stroke {
+            100% { stroke-dashoffset: 0; }
+        }
+
         /* Print Override */
         @media print {
             body > *:not(.print-only-resume) {
@@ -987,28 +1023,28 @@
             <!-- Right: Dynamic Inquiry Form (7 cols) -->
             <div class="lg:col-span-7">
                 <div class="glass-panel p-8 rounded-lg h-full flex flex-col justify-between">
-                    <form id="contactForm" onsubmit="handleFormSubmit(event)" class="space-y-4">
+                    <form id="contactForm" action="https://formspree.io/f/xnqbkljd" method="POST" onsubmit="handleFormSubmit(event)" class="space-y-4">
                         <h4 class="text-sm font-bold uppercase text-white tracking-wider font-mono border-b border-white/5 pb-3">Send recruitment inquiry</h4>
                         
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                           <div>
                             <label class="block text-[10px] uppercase text-zinc-500 font-mono mb-1">Your Name *</label>
-                            <input type="text" id="form-name" required class="w-full bg-zinc-900 border border-white/5 rounded px-3 py-2 text-sm text-white focus:outline-none focus:border-blue-500 transition-colors" placeholder="e.g. Hiring Manager">
+                            <input type="text" id="form-name" name="name" required class="w-full bg-zinc-900 border border-white/5 rounded px-3 py-2 text-sm text-white focus:outline-none focus:border-blue-500 transition-colors" placeholder="e.g. Hiring Manager">
                           </div>
                           <div>
                             <label class="block text-[10px] uppercase text-zinc-500 font-mono mb-1">Email *</label>
-                            <input type="email" id="form-email" required class="w-full bg-zinc-900 border border-white/5 rounded px-3 py-2 text-sm text-white focus:outline-none focus:border-blue-500 transition-colors" placeholder="name@company.com">
+                            <input type="email" id="form-email" name="email" required class="w-full bg-zinc-900 border border-white/5 rounded px-3 py-2 text-sm text-white focus:outline-none focus:border-blue-500 transition-colors" placeholder="name@company.com">
                           </div>
                         </div>
 
                         <div>
                           <label class="block text-[10px] uppercase text-zinc-500 font-mono mb-1">Company / Organization</label>
-                          <input type="text" id="form-company" class="w-full bg-zinc-900 border border-white/5 rounded px-3 py-2 text-sm text-white focus:outline-none focus:border-blue-500 transition-colors" placeholder="e.g. Fluor, GIP, Hatch">
+                          <input type="text" id="form-company" name="company" class="w-full bg-zinc-900 border border-white/5 rounded px-3 py-2 text-sm text-white focus:outline-none focus:border-blue-500 transition-colors" placeholder="e.g. Fluor, GIP, Hatch">
                         </div>
 
                         <div>
                           <label class="block text-[10px] uppercase text-zinc-500 font-mono mb-1">Message Detail *</label>
-                          <textarea id="form-message" required rows="3" class="w-full bg-zinc-900 border border-white/5 rounded px-3 py-2 text-sm text-white focus:outline-none focus:border-blue-500 transition-colors resize-none" placeholder="Detail your project timeline or specifications..."></textarea>
+                          <textarea id="form-message" name="message" required rows="3" class="w-full bg-zinc-900 border border-white/5 rounded px-3 py-2 text-sm text-white focus:outline-none focus:border-blue-500 transition-colors resize-none" placeholder="Detail your project timeline or specifications..."></textarea>
                         </div>
 
                         <div class="flex flex-col sm:flex-row gap-2 pt-2">
@@ -1023,9 +1059,14 @@
 
                     <!-- Success State (hidden by default) -->
                     <div id="formSuccess" class="hidden text-center py-12 space-y-4">
-                        <span class="inline-block text-4xl text-blue-500 animate-bounce">✓</span>
-                        <h4 class="text-lg font-bold text-white">Inquiry Queued Successfully</h4>
-                        <p class="text-sm text-zinc-400 max-w-sm mx-auto">Thank you. I have received your message details and will respond within 24 hours.</p>
+                        <div class="inline-flex items-center justify-center mb-2">
+                            <svg class="w-16 h-16" viewBox="0 0 52 52">
+                                <circle class="checkmark-circle" cx="26" cy="26" r="25" fill="none"/>
+                                <path class="checkmark-kick" fill="none" stroke="#3b82f6" stroke-width="3" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
+                            </svg>
+                        </div>
+                        <h4 class="text-lg font-bold text-white">Inquiry Sent Successfully</h4>
+                        <p class="text-sm text-zinc-400 max-w-sm mx-auto">Thank you. Your message has been sent to Formspree. I have received your message details and will respond within 24 hours.</p>
                         <button onclick="resetContactForm()" class="px-4 py-1.5 rounded border border-white/5 text-zinc-500 hover:text-white transition-colors text-xs uppercase font-mono font-bold tracking-wider">
                             Send another
                         </button>
@@ -1180,22 +1221,78 @@
         // Contact inquiry form submit handler
         function handleFormSubmit(event) {
             event.preventDefault();
-            const submitBtn = event.target.querySelector('button[type="submit"]');
+            const form = event.target;
+            const submitBtn = form.querySelector('button[type="submit"]');
+            const originalBtnText = submitBtn.textContent;
             submitBtn.disabled = true;
-            submitBtn.textContent = "QUEUING...";
+            submitBtn.innerHTML = `
+                <span class="inline-flex items-center justify-center gap-2 w-full">
+                    <svg class="animate-spin h-4 w-4 text-white" fill="none" viewBox="0 0 24 24">
+                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                    SENDING INQUIRY...
+                </span>
+            `;
 
-            setTimeout(() => {
-                document.getElementById('contactForm').classList.add('hidden');
-                document.getElementById('formSuccess').classList.remove('hidden');
-            }, 1000);
+            const data = new FormData(form);
+            fetch(form.action, {
+                method: form.method,
+                body: data,
+                headers: {
+                    'Accept': 'application/json'
+                }
+            })
+            .then(response => {
+                if (response.ok) {
+                    // Add fade-out class to start form exit animation
+                    form.classList.add('form-fade-out');
+                    
+                    // Wait for the exit animation to complete (500ms)
+                    setTimeout(() => {
+                        form.classList.add('hidden');
+                        form.classList.remove('form-fade-out');
+                        
+                        const successState = document.getElementById('formSuccess');
+                        successState.classList.remove('hidden');
+                        successState.classList.add('form-fade-in');
+                    }, 500);
+                } else {
+                    return response.json().then(data => {
+                        if (Object.prototype.hasOwnProperty.call(data, 'errors')) {
+                            alert(data["errors"].map(error => error["message"]).join(", "));
+                        } else {
+                            alert("Oops! There was a problem submitting your form. Please try the direct draft email action instead.");
+                        }
+                        submitBtn.disabled = false;
+                        submitBtn.textContent = originalBtnText;
+                    });
+                }
+            })
+            .catch(error => {
+                alert("There was a connectivity error submitting your form. Please try the direct draft email action instead.");
+                submitBtn.disabled = false;
+                submitBtn.textContent = originalBtnText;
+            });
         }
 
         function resetContactForm() {
-            document.getElementById('contactForm').reset();
-            document.getElementById('contactForm').classList.remove('hidden');
-            document.getElementById('formSuccess').classList.add('hidden');
+            const form = document.getElementById('contactForm');
+            const successState = document.getElementById('formSuccess');
             
-            const submitBtn = document.querySelector('#contactForm button[type="submit"]');
+            successState.classList.add('hidden');
+            successState.classList.remove('form-fade-in');
+            
+            form.reset();
+            form.classList.remove('hidden');
+            form.classList.add('form-fade-in');
+            
+            // Remove animation class after it completes to keep clean state
+            setTimeout(() => {
+                form.classList.remove('form-fade-in');
+            }, 600);
+            
+            const submitBtn = form.querySelector('button[type="submit"]');
             submitBtn.disabled = false;
             submitBtn.textContent = "Submit Inquiry";
         }
