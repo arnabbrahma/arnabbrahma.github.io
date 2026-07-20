@@ -1243,7 +1243,7 @@
                     'Accept': 'application/json'
                 }
             })
-            .then(response => {
+            .then(async response => {
                 if (response.ok) {
                     // Add fade-out class to start form exit animation
                     form.classList.add('form-fade-out');
@@ -1258,19 +1258,26 @@
                         successState.classList.add('form-fade-in');
                     }, 500);
                 } else {
-                    return response.json().then(data => {
-                        if (Object.prototype.hasOwnProperty.call(data, 'errors')) {
-                            alert(data["errors"].map(error => error["message"]).join(", "));
-                        } else {
-                            alert("Oops! There was a problem submitting your form. Please try the direct draft email action instead.");
+                    let errorMessage = "Formspree submission failed.";
+                    try {
+                        const responseData = await response.json();
+                        if (responseData && responseData.errors) {
+                            errorMessage = responseData.errors.map(err => err.message).join(", ");
+                        } else if (responseData && responseData.error) {
+                            errorMessage = responseData.error;
                         }
-                        submitBtn.disabled = false;
-                        submitBtn.textContent = originalBtnText;
-                    });
+                    } catch (e) {
+                        errorMessage = `HTTP error ${response.status}. This usually means your Formspree form (ID: xnqbkljd) is either unverified, has ran out of credits, or needs to whitelist this preview domain.`;
+                    }
+                    
+                    alert(`${errorMessage}\n\nPlease verify your Formspree setup or use the "Draft Email Instead" button.`);
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = originalBtnText;
                 }
             })
             .catch(error => {
-                alert("There was a connectivity error submitting your form. Please try the direct draft email action instead.");
+                console.error("Formspree submission error:", error);
+                alert("There was a network or CORS error submitting to Formspree. This is expected in preview environments unless your Formspree settings allow submissions from any origin.\n\nPlease try the 'Draft Email Instead' button to send your message directly via email!");
                 submitBtn.disabled = false;
                 submitBtn.textContent = originalBtnText;
             });
